@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/account_toolbar"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:background="@color/white"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:contentInsetStart="0dp"
-            app:menu="@menu/menu_main"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            app:menu="@menu/menu_main">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/account_toolbar_layout"
@@ -44,17 +40,46 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/appCompatSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.appcompat.widget.AppCompatSpinner>
+
+        <EditText
+            android:id="@+id/edit1"
+            style="@style/edittext_style_default"
+            android:hint="min length"
+            android:theme="@style/edittext_theme_default"
+            app:layout_constraintEnd_toStartOf="@+id/textInputEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatSpinner" />
+
+        <EditText
+            android:id="@+id/textInputEditText"
+            style="@style/edittext_style_default"
+            android:hint="depth"
+            android:theme="@style/edittext_theme_default"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/edit1"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatSpinner" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
         android:name="com.example.textbuilder.ui.ReadySourceFragment"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        />
+        android:layout_height="match_parent" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -30,7 +30,7 @@
 
         <ImageButton
             android:id="@+id/card_button_like"
-            style="@style/card_item_image_button_style"
+            style="@style/carditem_imagebutton_style"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:cropToPadding="false"
@@ -42,14 +42,14 @@
 
         <ImageButton
             android:id="@+id/card_button_copy"
-            style="@style/card_item_image_button_style"
+            style="@style/carditem_imagebutton_style"
             android:src="@drawable/ic_copy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_button_like" />
 
         <ImageButton
             android:id="@+id/card_button_share"
-            style="@style/card_item_image_button_style"
+            style="@style/carditem_imagebutton_style"
             android:src="@drawable/ic_share"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_button_copy" />

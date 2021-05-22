@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="card_item_image_button_style">
+
+    <style name="carditem_imagebutton_style">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:foreground">@drawable/ripple_rounded</item>
         <item name="android:focusable">true</item>
@@ -16,5 +17,16 @@
     <style name="text_style_default">
         <item name="android:textSize">@dimen/text_size_default</item>
         <item name="android:padding">@dimen/size_default</item>
+    </style>
+
+    <style name="edittext_theme_default">
+        <item name="colorAccent">@color/primary</item>
+    </style>
+
+    <style name="edittext_style_default">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">number</item>
+        <item name="android:autofillHints">false</item>
     </style>
 </resources>
