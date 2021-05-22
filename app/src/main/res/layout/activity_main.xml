@@ -72,13 +72,13 @@
             app:layout_constraintStart_toEndOf="@id/edit1"
             app:layout_constraintTop_toBottomOf="@+id/appCompatSpinner" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/fragment_container_view"
-        android:name="com.example.textbuilder.ui.ReadySourceFragment"
+        android:name="com.example.textbuilder.ui.readysource.ReadySourceFragment"
+        tools:layout="@layout/fragment_ready_source"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

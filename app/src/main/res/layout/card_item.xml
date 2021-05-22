@@ -10,7 +10,7 @@
     android:layout_marginBottom="4dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp"
-    tools:context="ui.ReadySourceFragment">
+    tools:context=".ui.readysource.ReadySourceFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,23 +19,20 @@
         android:layout_marginEnd="10dp">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/card_text_main"
+            style="@style/text_style_default"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/text_style_default"
+            android:minHeight="121dp"
             android:text="Сунул другую - нет второй. Залез весь. Вот он был, и вот его не стало. Почему феминистки не могут решить проблему гендерного неравенства? . . . Это суровое, по-настоящему бесщадное противостояние, исход которого не ясен. Очевидно, что каждая сторона рассчитывает на победу. Впрочем, я уже согласен и на ничью."
             app:layout_constraintEnd_toStartOf="@+id/card_button_like"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/card_button_like"
             style="@style/carditem_imagebutton_style"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:cropToPadding="false"
-            android:paddingStart="3dp"
-            android:paddingTop="3dp"
             android:src="@drawable/ic_favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,13 +52,14 @@
             app:layout_constraintTop_toBottomOf="@id/card_button_copy" />
 
         <LinearLayout
+            android:id="@+id/card_layout_unfold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/rectangle_upperline_arrowdown"
             android:foreground="@drawable/ripple_rounded"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/card_text_main"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView

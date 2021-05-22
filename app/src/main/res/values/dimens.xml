@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size_default">16sp</dimen>
+    <dimen name="size_small">4dp</dimen>
     <dimen name="size_default">8dp</dimen>
     <dimen name="size_medium">10dp</dimen>
     <dimen name="icon_size_default">28dp</dimen>
