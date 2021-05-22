@@ -42,7 +42,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_default">
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/appCompatSpinner"
@@ -71,6 +72,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/edit1"
             app:layout_constraintTop_toBottomOf="@+id/appCompatSpinner" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сгенерировать!"
+            app:layout_constraintTop_toBottomOf="@+id/edit1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

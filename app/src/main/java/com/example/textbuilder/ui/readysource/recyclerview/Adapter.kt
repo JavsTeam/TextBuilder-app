@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 
-class Adapter(private val names: List<String>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class Adapter(private val data: List<CardData>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
         class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             var mainTextView: TextView? = null
             var likeButton: ImageButton? = null
@@ -34,12 +34,10 @@ class Adapter(private val names: List<String>) : RecyclerView.Adapter<Adapter.Vi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mainTextView?.text = names[position]
-
+        holder.mainTextView?.text = data[position].text
     }
 
     override fun getItemCount(): Int {
-        return names.size
-
+        return data.size
     }
 }
