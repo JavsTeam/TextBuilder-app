@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TextBuilder</string>
+    <string-array name="source_list">
+        <item>Выберите исходник для генерации...</item>
+        <item>Юморески</item>
+        <item>Бугурты</item>
+        <item>Цитаты</item>
+        <item>Новости</item>
+    </string-array>
 </resources>
