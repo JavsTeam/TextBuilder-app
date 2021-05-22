@@ -21,7 +21,6 @@ class ReadySourceFragment : Fragment() {
         //return super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater.inflate(R.layout.fragment_ready_source, container, false)
 
-
         return rootView
     }
 
@@ -29,6 +28,7 @@ class ReadySourceFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.ready_source_fragment_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = Adapter(getCardsData())
+
         super.onViewCreated(view, savedInstanceState)
     }
 

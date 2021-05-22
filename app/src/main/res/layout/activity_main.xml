@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/primary_background"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,7 +16,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/account_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="@dimen/bar_height_default"
             android:background="@color/white"
             app:contentInsetStart="0dp"
             app:menu="@menu/menu_main">
@@ -27,13 +28,12 @@
 
                 <TextView
                     android:id="@+id/textView"
+                    style="@style/text_style_header"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:gravity="center_vertical"
+                    android:layout_marginStart="14dp"
                     android:text="TextBuilder"
-                    android:textColor="@color/primary"
-                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -53,5 +53,4 @@
         tools:layout="@layout/fragment_ready_source"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </LinearLayout>

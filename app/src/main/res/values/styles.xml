@@ -19,14 +19,21 @@
         <item name="android:padding">@dimen/size_default</item>
     </style>
 
+    <style name="text_style_header">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:padding">@dimen/size_default</item>
+    </style>
+
     <style name="edittext_theme_default">
         <item name="colorAccent">@color/primary</item>
     </style>
 
     <style name="edittext_style_default">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/bar_height_default</item>
         <item name="android:inputType">number</item>
+        <item name="android:textSize">@dimen/text_size_default</item>
         <item name="android:autofillHints">false</item>
     </style>
 </resources>
