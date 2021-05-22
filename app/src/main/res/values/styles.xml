@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="card_item_image_button_style">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:foreground">@drawable/ripple_rounded</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_marginBottom">@dimen/size_default</item>
+        <item name="android:layout_marginTop">@dimen/size_default</item>
+        <item name="android:paddingStart">1dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+    </style>
+
+    <style name="text_style_default">
+        <item name="android:textSize">@dimen/text_size_default</item>
+        <item name="android:padding">@dimen/size_default</item>
+    </style>
+</resources>
