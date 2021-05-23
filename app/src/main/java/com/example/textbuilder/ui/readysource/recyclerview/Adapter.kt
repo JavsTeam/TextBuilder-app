@@ -49,7 +49,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentCard = data[position]
+        val currentCard = data[data.size - position - 1]
 
         initLikeButton(holder, currentCard)
         initCopyButton(holder, currentCard)
