@@ -1,16 +1,24 @@
 package com.example.textbuilder.ui.readysource.recyclerview
 
-import android.util.Log
+import android.R.attr.label
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 
-class Adapter(private val data: List<Card>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+
+class Adapter(private val data: List<Card>, private val context: Context) :
+    RecyclerView.Adapter<Adapter.ViewHolder>() {
     private val maxLength = 200
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,47 +49,71 @@ class Adapter(private val data: List<Card>) : RecyclerView.Adapter<Adapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.isFavorite = data[position].isFavorite
+        val currentCard = data[position]
 
-        if(holder.isFavorite) {
-            holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
-        } else {
-            holder.likeButton?.setImageResource(R.drawable.ic_favorite)
-        }
-
-        holder.likeButton?.setOnClickListener {
-            if(holder.isFavorite) {
-                holder.likeButton?.setImageResource(R.drawable.ic_favorite)
-            } else {
-                holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
-            }
-            holder.isFavorite = !holder.isFavorite
-        }
-        initFolding(holder, position)
+        initLikeButton(holder, currentCard)
+        initCopyButton(holder, currentCard)
+        initFolding(holder, currentCard)
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
 
-    private fun initFolding(holder: ViewHolder, position: Int) {
-        if (data[position].text.length > maxLength) { // text is too long
-            holder.mainTextView?.text = data[position].text.substring(0, maxLength) + " ...";
+    private fun initCopyButton(holder: ViewHolder, currentCard: Card) {
+        holder.copyButton?.setOnClickListener {
+            makeToast("Скопировано!")
+            context.copyToClipboard(currentCard.text)
+        }
+    }
+
+    private fun Context.copyToClipboard(text: CharSequence) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("label", text)
+        clipboard.setPrimaryClip(clip)
+    }
+
+    private fun initLikeButton(holder: ViewHolder, currentCard: Card) {
+        holder.isFavorite = currentCard.isFavorite
+
+        if (holder.isFavorite) {
+            holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
+        } else {
+            holder.likeButton?.setImageResource(R.drawable.ic_favorite)
+        }
+
+        holder.likeButton?.setOnClickListener {
+            if (holder.isFavorite) {
+                holder.likeButton?.setImageResource(R.drawable.ic_favorite)
+            } else {
+                holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
+            }
+            holder.isFavorite = !holder.isFavorite
+        }
+    }
+
+    private fun initFolding(holder: ViewHolder, currentCard: Card) {
+        if (currentCard.text.length > maxLength) { // text is too long
+            holder.mainTextView?.text = currentCard.text.substring(0, maxLength) + " ...";
             holder.foldLayout?.visibility = View.GONE
             holder.unfoldLayout?.setOnClickListener {
-                holder.mainTextView?.text = data[position].text
+                holder.mainTextView?.text = currentCard.text
                 holder.unfoldLayout?.visibility = View.GONE
                 holder.foldLayout?.visibility = View.VISIBLE
             }
             holder.foldLayout?.setOnClickListener {
-                holder.mainTextView?.text = data[position].text.substring(0, maxLength) + "...";
+                holder.mainTextView?.text = currentCard.text.substring(0, maxLength) + "...";
                 holder.unfoldLayout?.visibility = View.VISIBLE
                 holder.foldLayout?.visibility = View.GONE
             }
         } else { // all ok
             holder.unfoldLayout?.visibility = View.GONE
             holder.foldLayout?.visibility = View.GONE
-            holder.mainTextView?.text = data[position].text
+            holder.mainTextView?.text = currentCard.text
         }
+    }
+
+    private fun makeToast(text: String) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 }

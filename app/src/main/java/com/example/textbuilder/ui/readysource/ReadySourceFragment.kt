@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,7 +49,7 @@ class ReadySourceFragment : Fragment() {
     }
 
     private fun setRecyclerViewAdapter(cardData: ArrayList<Card>) {
-        recyclerView?.adapter = Adapter(cardData)
+        recyclerView?.adapter = Adapter(cardData, requireContext())
     }
 
     private fun getFavoriteCards(cards: ArrayList<Card>): ArrayList<Card> {
@@ -81,5 +82,9 @@ class ReadySourceFragment : Fragment() {
             }
         }
         return result.toString()
+    }
+
+    private fun makeToast(text: String) {
+        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 }
