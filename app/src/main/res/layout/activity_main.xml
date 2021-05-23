@@ -18,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/bar_height_default"
             android:background="@color/white"
-            app:contentInsetStart="0dp"
-            app:menu="@menu/menu_main">
+            app:contentInsetStart="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/account_toolbar_layout"
@@ -36,6 +35,20 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageButton
+                    style="@style/clickable_style"
+                    android:id="@+id/toolbar_button_favorite"
+                    android:src="@drawable/ic_favorite_filled"
+                    android:background="@android:color/transparent"
+                    android:layout_marginEnd="14dp"
+                    android:scaleType="fitXY"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -48,7 +61,7 @@
         tools:layout="@layout/fragment_interaction" />
 
     <fragment
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragment_ready_source"
         android:name="com.example.textbuilder.ui.readysource.ReadySourceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
