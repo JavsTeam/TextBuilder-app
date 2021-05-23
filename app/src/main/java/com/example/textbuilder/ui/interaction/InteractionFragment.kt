@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.gen.src.TextBuilder.TextBuilder
+import com.example.gen.src.TextBuilder.handlers.Files
 import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
 import com.example.textbuilder.db.CardsEntity
 import com.example.textbuilder.ui.UpdateListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.File
 import kotlin.random.Random
 
 
@@ -124,26 +127,25 @@ class InteractionFragment : Fragment() {
                         // TODO: no realization yet
                         1 -> {
                             makeToast(sources[1])
-                            text = getTextFromServer(1, lengthStr.toInt(), depthStr.toInt())
+                            text = getTextFromServer(0, lengthStr.toInt(), depthStr.toInt())
                             saveToDB(text)
                         }
                         2 -> {
                             makeToast(sources[2])
-                            text = getTextFromServer(2, lengthStr.toInt(), depthStr.toInt())
+                            text = getTextFromServer(1, lengthStr.toInt(), depthStr.toInt())
                             saveToDB(text)
                         }
                         3 -> {
                             makeToast(sources[3])
-                            text = getTextFromServer(3, lengthStr.toInt(), depthStr.toInt())
+                            text = getTextFromServer(2, lengthStr.toInt(), depthStr.toInt())
                             saveToDB(text)
                         }
                         4 -> {
                             makeToast(sources[4])
-                            text = getTextFromServer(4, lengthStr.toInt(), depthStr.toInt())
+                            text = getTextFromServer(3, lengthStr.toInt(), depthStr.toInt())
                             saveToDB(text)
                         }
                     }
-                    Log.d("Debug", "onClick()")
                     updateListener?.onUpdate()
                 }
             } else {
@@ -159,6 +161,7 @@ class InteractionFragment : Fragment() {
 
     // TODO: Net database connection
     private fun getTextFromServer(sourceId: Int, length: Int, depth: Int): String {
+        //return getGeneratedText(sourceId, length, depth)
         return getRandomText(Random.nextInt(0, 20))
     }
 
@@ -197,5 +200,16 @@ class InteractionFragment : Fragment() {
             }
         }
         return result.toString()
+    }
+
+    private val sourcesList = listOf(
+        "src\\main\\java\\com\\example\\gen\\TextBuilder\\data\\files\\jumoreski.txt",
+        "src\\main\\java\\com\\example\\gen\\TextBuilder\\data\\files\\bugurts.txt"
+    )
+
+    private fun getGeneratedText(sourceId: Int, length: Int, depth: Int): String {
+        Log.d("Debug", "getGeneratedText($sourceId, $length, $depth)")
+        val textBuilder = TextBuilder(depth, sourcesList[sourceId])
+        return textBuilder.getText(length)
     }
 }
