@@ -12,12 +12,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-/*
-        val readySourceFragment: ReadySourceFragment = findViewById(R.id.fragment_ready_source)
 
+        var isDisplayingAll = true
+        val readySourceFragment = supportFragmentManager.findFragmentById(R.id.fragment_ready_source) as ReadySourceFragment
         val favoriteButton: ImageButton = findViewById(R.id.toolbar_button_favorite)
         favoriteButton.setOnClickListener {
-            readySourceFragment.displayFavorite()
-        }*/
+            if(isDisplayingAll) readySourceFragment.displayFavorite()
+            else readySourceFragment.displayAll()
+            isDisplayingAll = !isDisplayingAll
+        }
     }
 }

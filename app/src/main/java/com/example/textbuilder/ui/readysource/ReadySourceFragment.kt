@@ -12,6 +12,7 @@ import com.example.textbuilder.ui.readysource.recyclerview.Adapter
 import com.example.textbuilder.ui.readysource.recyclerview.Card
 import java.lang.StringBuilder
 import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 
 class ReadySourceFragment : Fragment() {
@@ -62,8 +63,12 @@ class ReadySourceFragment : Fragment() {
 
     private fun getCardsData(): ArrayList<Card> {
         val data = ArrayList<Card>()
-        (0..15).forEach { i -> data.add(Card(getRandomText(i))) }
+        (0..15).forEach { i -> data.add(Card(getRandomText(i), getRandBool())) }
         return data
+    }
+
+    private fun getRandBool(): Boolean {
+        return Random.nextBoolean()
     }
 
     private fun getRandomText(seed: Int): String {
@@ -71,7 +76,7 @@ class ReadySourceFragment : Fragment() {
         repeat((0..(20 - seed)).count()) {
             (0..seed * 5).forEach { i ->
                 result.append(
-                    (kotlin.random.Random(i * it).nextInt() % 100 + 20).toChar()
+                    (Random(i * it).nextInt() % 100 + 20).toChar()
                 )
             }
         }
