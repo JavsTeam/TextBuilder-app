@@ -15,15 +15,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
+        android:layout_marginStart="@dimen/text_size_big"
+        android:layout_marginEnd="@dimen/size_small">
 
         <TextView
             android:id="@+id/card_text_main"
             style="@style/text_style_default"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="121dp"
+            android:minHeight="125dp"
             android:text="Сунул другую - нет второй. Залез весь. Вот он был, и вот его не стало. Почему феминистки не могут решить проблему гендерного неравенства? . . . Это суровое, по-настоящему бесщадное противостояние, исход которого не ясен. Очевидно, что каждая сторона рассчитывает на победу. Впрочем, я уже согласен и на ничью."
             app:layout_constraintEnd_toStartOf="@+id/card_button_like"
             app:layout_constraintHorizontal_bias="0.0"

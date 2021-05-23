@@ -14,10 +14,13 @@
             android:id="@+id/interaction_fragment_spinner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bar_height_default"
-            android:background="@drawable/rectangle_arrowdown"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
+            android:background="@drawable/rectangle_arrowdown"
+            android:clickable="true"
             android:entries="@array/source_list"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -43,9 +46,13 @@
             app:layout_constraintTop_toBottomOf="@+id/interaction_fragment_spinner" />
 
         <Button
+            android:id="@+id/interaction_fragment_button_generate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:height="@dimen/bar_height_default"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="Сгенерировать!"
             app:layout_constraintTop_toBottomOf="@+id/interaction_fragment_edittext_length" />
 

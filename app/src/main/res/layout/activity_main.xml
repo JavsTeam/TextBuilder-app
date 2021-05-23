@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/primary_background"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -43,14 +43,14 @@
     <fragment
         android:id="@+id/fragment_interaction"
         android:name="com.example.textbuilder.ui.interaction.InteractionFragment"
-        tools:layout="@layout/fragment_interaction"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_interaction" />
 
     <fragment
         android:id="@+id/fragment_container"
         android:name="com.example.textbuilder.ui.readysource.ReadySourceFragment"
-        tools:layout="@layout/fragment_ready_source"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_ready_source" />
 </LinearLayout>

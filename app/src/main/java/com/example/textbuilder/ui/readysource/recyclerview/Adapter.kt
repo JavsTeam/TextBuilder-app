@@ -41,7 +41,7 @@ class Adapter(private val data: List<CardData>) : RecyclerView.Adapter<Adapter.V
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(data[position].text.length > maxLength) { // text is too long
-            holder.mainTextView?.text = data[position].text.substring(0, maxLength) + "...";
+            holder.mainTextView?.text = data[position].text.substring(0, maxLength) + " ...";
             holder.foldLayout?.visibility = View.GONE
 
             holder.unfoldLayout?.setOnClickListener {

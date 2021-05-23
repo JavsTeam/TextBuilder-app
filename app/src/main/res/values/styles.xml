@@ -36,4 +36,8 @@
         <item name="android:textSize">@dimen/text_size_default</item>
         <item name="android:autofillHints">false</item>
     </style>
+
+    <style name="focusable_style">
+        <item name="android:focusable">true</item>
+    </style>
 </resources>
