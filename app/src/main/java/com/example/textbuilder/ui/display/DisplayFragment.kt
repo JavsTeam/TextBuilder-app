@@ -1,25 +1,20 @@
-package com.example.textbuilder.ui.readysource
+package com.example.textbuilder.ui.display
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
-import com.example.textbuilder.db.CardsEntity
-import com.example.textbuilder.ui.readysource.recyclerview.Adapter
-import com.example.textbuilder.ui.readysource.recyclerview.Card
+import com.example.textbuilder.ui.display.recyclerview.Adapter
+import com.example.textbuilder.ui.display.recyclerview.Card
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.collections.ArrayList
 
-
-class ReadySourceFragment : Fragment() {
+class DisplayFragment : Fragment() {
     var recyclerView: RecyclerView? = null
     var data: ArrayList<Card>? = null
 
@@ -28,14 +23,13 @@ class ReadySourceFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //return super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater.inflate(R.layout.fragment_ready_source, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_display, container, false)
         data = getCardsData()
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = view.findViewById(R.id.ready_source_fragment_recycler_view)
+        recyclerView = view.findViewById(R.id.display_fragment_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         super.onViewCreated(view, savedInstanceState)
     }
@@ -55,10 +49,8 @@ class ReadySourceFragment : Fragment() {
 
     private fun getFavoriteCards(cards: ArrayList<Card>): ArrayList<Card> {
         Thread.sleep(20) // Waiting for db
-        Log.d("Debug", "Getting fav cards $cards")
         val result: ArrayList<Card> = ArrayList()
         for (card: Card in cards) {
-            Log.d("Debug", "Card item: $card")
             if (card.isFavorite) {
                 result.add(card)
             }
@@ -68,7 +60,6 @@ class ReadySourceFragment : Fragment() {
 
     private fun getCardsData(): ArrayList<Card> {
         val data = ArrayList<Card>()
-        Log.d("Debug", "getting cards data")
         val db = CardsDatabase(requireContext())
         GlobalScope.launch {
             val dataFromDB = db.cardsDao().getAll()
@@ -81,36 +72,7 @@ class ReadySourceFragment : Fragment() {
                     )
                 )
             }
-            Log.d("Debug", "got cards data")
         }
-        Log.d("Debug", "Data is $data")
         return data
-    }
-
-    /*
-    private fun getCardsData(): ArrayList<Card> {
-        val data = ArrayList<Card>()
-        (0..15).forEach { i -> data.add(Card(getRandomText(i), getRandBool())) }
-        return data
-    }
-
-    private fun getRandBool(): Boolean {
-        return Random.nextBoolean()
-    }
-
-    private fun getRandomText(seed: Int): String {
-        val result = StringBuilder()
-        repeat((0..(20 - seed)).count()) {
-            (0..seed * 5).forEach { i ->
-                result.append(
-                    (Random(i * it).nextInt() % 100 + 20).toChar()
-                )
-            }
-        }
-        return result.toString()
-    }
-*/
-    private fun makeToast(text: String) {
-        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 }

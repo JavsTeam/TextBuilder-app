@@ -1,10 +1,9 @@
-package com.example.textbuilder.ui.readysource.recyclerview
+package com.example.textbuilder.ui.display.recyclerview
 
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
@@ -98,7 +96,6 @@ class Adapter(private val data: List<Card>, private val context: Context) :
 
         holder.likeButton?.setOnClickListener {
             if (holder.isFavorite) {
-                Log.d("Debug", "Deleting from favorites")
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite)
                 GlobalScope.launch {
                     val db = CardsDatabase(context)
@@ -107,17 +104,14 @@ class Adapter(private val data: List<Card>, private val context: Context) :
                     db.cardsDao().updateCards(cardEntity)
                 }
             } else {
-                Log.d("Debug", "Adding to favorites")
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
                 GlobalScope.launch {
                     val db = CardsDatabase(context)
                     val cardEntity = db.cardsDao().findById(currentCard.id)
                     cardEntity.isFavorite = true
                     db.cardsDao().updateCards(cardEntity)
-                    Log.d("Debug", "Cards updated")
                 }
             }
-            Log.d("Debug", "Inverting holder value")
             holder.isFavorite = !holder.isFavorite
             currentCard.isFavorite = !currentCard.isFavorite
         }

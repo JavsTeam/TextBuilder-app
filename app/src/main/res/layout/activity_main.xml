@@ -61,9 +61,9 @@
         tools:layout="@layout/fragment_interaction" />
 
     <fragment
-        android:id="@+id/fragment_ready_source"
-        android:name="com.example.textbuilder.ui.readysource.ReadySourceFragment"
+        android:id="@+id/fragment_display"
+        android:name="com.example.textbuilder.ui.display.DisplayFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_ready_source" />
+        tools:layout="@layout/fragment_display" />
 </LinearLayout>

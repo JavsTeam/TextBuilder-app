@@ -1,35 +1,30 @@
 package com.example.textbuilder.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
-import android.util.Log
-import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import com.example.textbuilder.R
+import com.example.textbuilder.ui.display.DisplayFragment
 import com.example.textbuilder.ui.interaction.InteractionFragment
-import com.example.textbuilder.ui.readysource.ReadySourceFragment
 
 class MainActivity : AppCompatActivity(), UpdateListener {
-    var readySourceFragment: ReadySourceFragment? = null
+    private var displayFragment: DisplayFragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         var isDisplayingAll = true
-        readySourceFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_ready_source) as ReadySourceFragment
+        displayFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_display) as DisplayFragment
         val favoriteButton: ImageButton = findViewById(R.id.toolbar_button_favorite)
         favoriteButton.setOnClickListener {
-            if (isDisplayingAll) readySourceFragment?.displayFavorite()
-            else readySourceFragment?.displayAll()
+            if (isDisplayingAll) displayFragment?.displayFavorite()
+            else displayFragment?.displayAll()
             isDisplayingAll = !isDisplayingAll
         }
-        readySourceFragment?.displayAll() // crutch for first launch
+        displayFragment?.displayAll() // crutch for first launch
 
         val interactionFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_interaction) as InteractionFragment
@@ -37,8 +32,7 @@ class MainActivity : AppCompatActivity(), UpdateListener {
     }
 
     override fun onUpdate() {
-        Log.d("Debug", "onUpdate()")
         Thread.sleep(20) // waiting for db
-        readySourceFragment?.displayAll()
+        displayFragment?.displayAll()
     }
 }

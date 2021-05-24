@@ -16,14 +16,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ReadHandler {
-    Context context;
-
-    ReadHandler() {}
-
-    ReadHandler(Context context) {
-        this.context = context;
-    }
-
     public static String readFile(int resourceId, Context context) {
         Scanner scanner;
         StringBuilder text = new StringBuilder();
