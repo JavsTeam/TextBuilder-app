@@ -1,10 +1,14 @@
 package com.example.textbuilder.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
+import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import com.example.textbuilder.R
 import com.example.textbuilder.ui.interaction.InteractionFragment
 import com.example.textbuilder.ui.readysource.ReadySourceFragment

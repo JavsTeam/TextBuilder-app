@@ -3,6 +3,7 @@ package com.example.textbuilder.ui.readysource.recyclerview
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,10 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
-import com.example.textbuilder.db.CardsEntity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -56,7 +56,18 @@ class Adapter(private val data: List<Card>, private val context: Context) :
 
         initLikeButton(holder, currentCard, context)
         initCopyButton(holder, currentCard)
+        initShareButton(holder, currentCard)
         initFolding(holder, currentCard)
+    }
+
+    private fun initShareButton(holder: ViewHolder, currentCard: Card) {
+        holder.shareButton?.setOnClickListener {
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            val shareBody = currentCard.text
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+            context.startActivity(Intent.createChooser(sharingIntent, "Share using"))
+        }
     }
 
     override fun getItemCount(): Int {
