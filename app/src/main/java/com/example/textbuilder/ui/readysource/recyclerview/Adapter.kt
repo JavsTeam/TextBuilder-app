@@ -116,6 +116,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
         if (currentCard.text.length > maxLength) { // text is too long
             holder.mainTextView?.text = currentCard.text.substring(0, maxLength) + " ...";
             holder.foldLayout?.visibility = View.GONE
+            holder.unfoldLayout?.visibility = View.VISIBLE
             holder.unfoldLayout?.setOnClickListener {
                 holder.mainTextView?.text = currentCard.text
                 holder.unfoldLayout?.visibility = View.GONE
