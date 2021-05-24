@@ -3,6 +3,7 @@ package com.example.textbuilder.ui.readysource.recyclerview
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,13 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
+import com.example.textbuilder.db.CardsDatabase
+import com.example.textbuilder.db.CardsEntity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class Adapter(private val data: List<Card>, private val context: Context) :
@@ -48,7 +54,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentCard = data[data.size - position - 1]
 
-        initLikeButton(holder, currentCard)
+        initLikeButton(holder, currentCard, context)
         initCopyButton(holder, currentCard)
         initFolding(holder, currentCard)
     }
@@ -70,7 +76,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
         clipboard.setPrimaryClip(clip)
     }
 
-    private fun initLikeButton(holder: ViewHolder, currentCard: Card) {
+    private fun initLikeButton(holder: ViewHolder, currentCard: Card, context: Context) {
         holder.isFavorite = currentCard.isFavorite
 
         if (holder.isFavorite) {
@@ -81,11 +87,28 @@ class Adapter(private val data: List<Card>, private val context: Context) :
 
         holder.likeButton?.setOnClickListener {
             if (holder.isFavorite) {
+                Log.d("Debug", "Deleting from favorites")
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite)
+                GlobalScope.launch {
+                    val db = CardsDatabase(context)
+                    val cardEntity = db.cardsDao().findById(currentCard.id)
+                    cardEntity.isFavorite = false
+                    db.cardsDao().updateCards(cardEntity)
+                }
             } else {
+                Log.d("Debug", "Adding to favorites")
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
+                GlobalScope.launch {
+                    val db = CardsDatabase(context)
+                    val cardEntity = db.cardsDao().findById(currentCard.id)
+                    cardEntity.isFavorite = true
+                    db.cardsDao().updateCards(cardEntity)
+                    Log.d("Debug", "Cards updated")
+                }
             }
+            Log.d("Debug", "Inverting holder value")
             holder.isFavorite = !holder.isFavorite
+            currentCard.isFavorite = !currentCard.isFavorite
         }
     }
 

@@ -54,8 +54,11 @@ class ReadySourceFragment : Fragment() {
     }
 
     private fun getFavoriteCards(cards: ArrayList<Card>): ArrayList<Card> {
+        Thread.sleep(20) // Waiting for db
+        Log.d("Debug", "Getting fav cards $cards")
         val result: ArrayList<Card> = ArrayList()
         for (card: Card in cards) {
+            Log.d("Debug", "Card item: $card")
             if (card.isFavorite) {
                 result.add(card)
             }
@@ -65,7 +68,6 @@ class ReadySourceFragment : Fragment() {
 
     private fun getCardsData(): ArrayList<Card> {
         val data = ArrayList<Card>()
-
         Log.d("Debug", "getting cards data")
         val db = CardsDatabase(requireContext())
         GlobalScope.launch {
@@ -73,14 +75,14 @@ class ReadySourceFragment : Fragment() {
             dataFromDB.forEach {
                 data.add(
                     Card(
-                        /*it.id.toString() + " " +*/ it.content, // currently disabled
+                        it.id,
+                        it.content,
                         it.isFavorite
                     )
                 )
             }
             Log.d("Debug", "got cards data")
         }
-        // Thread.sleep(100) // crutch to wait for DB access
         Log.d("Debug", "Data is $data")
         return data
     }

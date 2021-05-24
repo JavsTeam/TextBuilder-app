@@ -10,6 +10,9 @@ interface CardsDao {
     @Query("SELECT * FROM cards_entity WHERE title LIKE :title")
     fun findByTitle(title: String): CardsEntity
 
+    @Query("SELECT * FROM cards_entity WHERE id LIKE :id")
+    fun findById(id: Int): CardsEntity
+
     @Insert
     fun insert(vararg todo: CardsEntity)
 

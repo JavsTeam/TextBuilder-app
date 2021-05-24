@@ -27,13 +27,9 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         }
         readySourceFragment?.displayAll() // crutch for first launch
 
-
         val interactionFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_interaction) as InteractionFragment
         interactionFragment.setListener(this)
-
-
-
     }
 
     override fun onUpdate() {
