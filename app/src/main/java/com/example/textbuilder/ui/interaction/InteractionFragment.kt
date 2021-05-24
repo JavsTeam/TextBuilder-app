@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 import kotlin.random.Random
 
-
 class InteractionFragment : Fragment() {
 
     var spinner: Spinner? = null
@@ -33,7 +32,6 @@ class InteractionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //return super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater.inflate(R.layout.fragment_interaction, container, false)
         initSpinner(rootView.findViewById(R.id.interaction_fragment_spinner))
         initTextEditors(
@@ -105,15 +103,8 @@ class InteractionFragment : Fragment() {
 
             //text = getTextFromServer(1, 30, 2)
             //saveToDB(text)
-/*
-            GlobalScope.launch {
-                val db = CardsDatabase(requireContext())
-                val DBdata = db.cardsDao().getAll()
-                DBdata.forEach {
-                    Log.d("Debug", it.toString())
-                }
-            }
-*/
+
+
             var length: Int = 0
             var depth: Int = 0
             if (lengthStr.isNotEmpty() && depthStr.isNotEmpty()) {
@@ -161,8 +152,8 @@ class InteractionFragment : Fragment() {
 
     // TODO: Net database connection
     private fun getTextFromServer(sourceId: Int, length: Int, depth: Int): String {
-        //return getGeneratedText(sourceId, length, depth)
-        return getRandomText(Random.nextInt(0, 20))
+        return getGeneratedText(sourceId, length, depth)
+        //return getRandomText(Random.nextInt(0, 20))
     }
 
     private fun saveToDB(text: String) {
@@ -203,13 +194,13 @@ class InteractionFragment : Fragment() {
     }
 
     private val sourcesList = listOf(
-        "src\\main\\java\\com\\example\\gen\\TextBuilder\\data\\files\\jumoreski.txt",
-        "src\\main\\java\\com\\example\\gen\\TextBuilder\\data\\files\\bugurts.txt"
+        R.raw.jumoreski,
+        R.raw.bugurts
     )
 
     private fun getGeneratedText(sourceId: Int, length: Int, depth: Int): String {
         Log.d("Debug", "getGeneratedText($sourceId, $length, $depth)")
-        val textBuilder = TextBuilder(depth, sourcesList[sourceId])
+        val textBuilder = TextBuilder(depth, requireContext(), sourcesList[sourceId])
         return textBuilder.getText(length)
     }
 }

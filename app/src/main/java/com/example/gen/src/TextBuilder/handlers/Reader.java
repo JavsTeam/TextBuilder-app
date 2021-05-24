@@ -1,5 +1,9 @@
 package com.example.gen.src.TextBuilder.handlers;
 
+import android.content.Context;
+
+import com.example.textbuilder.service.ReadHandler;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,6 +28,10 @@ public class Reader {
             e.printStackTrace();
         }
         return text.toString();
+    }
+
+    public static String readTxtInApp(int resourceId, Context context) {
+        return ReadHandler.readFile(resourceId, context);
     }
 
     public static String readTxt(File txtFile) {

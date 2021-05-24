@@ -13,7 +13,7 @@ public class Tester {
 
     public static void main(String[] args) {
 
-        TextBuilder textBuilder = new TextBuilder(2, JUMORESKI);
-        textBuilder.printText(10);
+       // TextBuilder textBuilder = new TextBuilder(2, JUMORESKI);
+       // textBuilder.printText(10);
     }
 }

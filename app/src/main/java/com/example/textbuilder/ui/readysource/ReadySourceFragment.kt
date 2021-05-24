@@ -73,7 +73,7 @@ class ReadySourceFragment : Fragment() {
             dataFromDB.forEach {
                 data.add(
                     Card(
-                        it.id.toString() + " " + it.content,
+                        /*it.id.toString() + " " +*/ it.content, // currently disabled
                         it.isFavorite
                     )
                 )

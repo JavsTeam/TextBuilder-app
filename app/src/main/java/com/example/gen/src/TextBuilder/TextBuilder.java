@@ -1,5 +1,6 @@
 package com.example.gen.src.TextBuilder;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.gen.src.TextBuilder.handlers.Reader;
@@ -12,34 +13,23 @@ import java.util.Random;
 
 public class TextBuilder {
     private final int depth;
-    private final String sourceTxtPath;
+   // private final String sourceTxtPath;
 
     private HashMap<String, Word> words = new HashMap<>();
 
-    public TextBuilder(int depth, String sourceTxtPath) {
+    public TextBuilder(int depth, Context context, int resourceId) {
         this.depth = depth;
-        this.sourceTxtPath = sourceTxtPath;
-        parseWordsFromText(depth, Reader.readTxt(sourceTxtPath));
+        //this.sourceTxtPath = sourceTxtPath;
+        parseWordsFromText(depth, Reader.readTxtInApp(resourceId, context));
 
         Log.d("Debug", words.toString());
-    }
-
-    public TextBuilder(int depth, File sourceTxtFile) {
-        this(depth, sourceTxtFile.getPath());
-    }
-
-    public TextBuilder(String sourceTxtPath) {
-        this(1, sourceTxtPath);
-    }
-
-    public TextBuilder(File sourceTxtFile) {
-        this(1, sourceTxtFile);
     }
 
     public String getText(int minLength) {
         StringBuilder text = new StringBuilder();
         String word = getFirstWord();
         String endWord;
+        minLength /= depth;
         int counter = 0;
 
         while (true) {
