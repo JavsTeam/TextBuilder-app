@@ -1,11 +1,10 @@
-package com.example.gen.src.TextBuilder;
+package com.example.textbuilder.gen;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.example.gen.src.TextBuilder.handlers.Reader;
+import com.example.textbuilder.gen.handlers.Reader;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,14 +12,13 @@ import java.util.Random;
 
 public class TextBuilder {
     private final int depth;
-   // private final String sourceTxtPath;
 
-    private HashMap<String, Word> words = new HashMap<>();
+    private final HashMap<String, Word> words = new HashMap<>();
 
     public TextBuilder(int depth, Context context, int resourceId) {
         this.depth = depth;
-        //this.sourceTxtPath = sourceTxtPath;
-        parseWordsFromText(depth, Reader.readTxtInApp(resourceId, context));
+        String text = Reader.readTxtFromRes(resourceId, context);
+        parseWordsFromText(depth, text);
 
         Log.d("Debug", words.toString());
     }

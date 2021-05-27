@@ -1,4 +1,4 @@
-package com.example.gen.src.TextBuilder.handlers;
+package com.example.textbuilder.gen.handlers;
 
 import java.io.File;
 import java.io.IOException;
