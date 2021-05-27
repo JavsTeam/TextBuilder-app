@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [CardsEntity::class],
+    entities = [CardEntity::class],
     version = 1
 )
-abstract class CardsDatabase : RoomDatabase(){
-    abstract fun cardsDao(): CardsDao
+abstract class CardsDatabase : RoomDatabase(), CardsOperational {
+    abstract override fun cardsDao(): CardsDao
 
     companion object {
         @Volatile private var instance: CardsDatabase? = null
