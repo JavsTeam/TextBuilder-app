@@ -13,7 +13,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
+import com.example.textbuilder.db.CardEntity
 import com.example.textbuilder.db.CardsDatabase
+import com.example.textbuilder.db.FavoriteCardsDatabase
+import com.example.textbuilder.db.providers.CardHandler
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -21,6 +24,9 @@ import kotlinx.coroutines.launch
 class Adapter(private val data: List<Card>, private val context: Context) :
     RecyclerView.Adapter<Adapter.ViewHolder>() {
     private val maxLength = 200
+    private val db = CardsDatabase(context)
+    private val cardHandler = CardHandler(db)
+    private val favHandler = CardHandler(FavoriteCardsDatabase(context))
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var isFavorite: Boolean = false
@@ -52,7 +58,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentCard = data[data.size - position - 1]
 
-        initLikeButton(holder, currentCard, context)
+        initLikeButton(holder, currentCard)
         initCopyButton(holder, currentCard)
         initShareButton(holder, currentCard)
         initFolding(holder, currentCard)
@@ -85,7 +91,9 @@ class Adapter(private val data: List<Card>, private val context: Context) :
         clipboard.setPrimaryClip(clip)
     }
 
-    private fun initLikeButton(holder: ViewHolder, currentCard: Card, context: Context) {
+    // TODO: FATAL ERROR when try to delete card which doesn't exist in main DB app crashes
+    //  favHandler.deleteCard(favHandler.getCard(currentCard.id)) argument here being is null
+    private fun initLikeButton(holder: ViewHolder, currentCard: Card) {
         holder.isFavorite = currentCard.isFavorite
 
         if (holder.isFavorite) {
@@ -95,23 +103,14 @@ class Adapter(private val data: List<Card>, private val context: Context) :
         }
 
         holder.likeButton?.setOnClickListener {
-            if (holder.isFavorite) {
+            if (holder.isFavorite) { // delete from fav
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite)
-                GlobalScope.launch {
-                    val db = CardsDatabase(context)
-                    val cardEntity = db.cardsDao().findById(currentCard.id)
-                    cardEntity.isFavorite = false
-                    db.cardsDao().updateCards(cardEntity)
-                }
-            } else {
+                favHandler.deleteCard(favHandler.getCard(currentCard.id))
+            } else { // add to fav
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
-                GlobalScope.launch {
-                    val db = CardsDatabase(context)
-                    val cardEntity = db.cardsDao().findById(currentCard.id)
-                    cardEntity.isFavorite = true
-                    db.cardsDao().updateCards(cardEntity)
-                }
+                favHandler.addCard(CardEntity(currentCard.id, currentCard.title, currentCard.text, true))
             }
+            cardHandler.changeFavoriteStatus(currentCard.id)
             holder.isFavorite = !holder.isFavorite
             currentCard.isFavorite = !currentCard.isFavorite
         }

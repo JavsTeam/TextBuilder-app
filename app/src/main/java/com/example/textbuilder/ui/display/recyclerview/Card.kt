@@ -1,3 +1,3 @@
 package com.example.textbuilder.ui.display.recyclerview
 
-data class Card(val id: Int = -1, val text: String = "", var isFavorite: Boolean = false)
+data class Card(val id: Int = -1, val title: String = "",  val text: String = "", var isFavorite: Boolean = false)

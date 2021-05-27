@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
+import com.example.textbuilder.db.FavoriteCardsDatabase
+import com.example.textbuilder.db.providers.CardHandler
 import com.example.textbuilder.ui.display.recyclerview.Adapter
 import com.example.textbuilder.ui.display.recyclerview.Card
 import kotlinx.coroutines.GlobalScope
@@ -36,6 +38,9 @@ class DisplayFragment : Fragment() {
 
     fun displayFavorite() {
         setRecyclerViewAdapter(getFavoriteCards(getCardsData()))
+
+        val cardHandler = CardHandler(FavoriteCardsDatabase(requireContext()))
+        setRecyclerViewAdapter(cardHandler.getAllCards())
     }
 
     fun displayAll() {
@@ -67,6 +72,7 @@ class DisplayFragment : Fragment() {
                 data.add(
                     Card(
                         it.id,
+                        it.title,
                         it.content,
                         it.isFavorite
                     )

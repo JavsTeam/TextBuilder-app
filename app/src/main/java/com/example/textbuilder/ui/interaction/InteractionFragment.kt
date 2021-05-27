@@ -3,17 +3,16 @@ package com.example.textbuilder.ui.interaction
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.example.gen.src.TextBuilder.TextBuilder
+import com.example.textbuilder.gen.TextBuilder
 import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
-import com.example.textbuilder.db.CardsEntity
+import com.example.textbuilder.db.CardEntity
 import com.example.textbuilder.ui.UpdateListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -114,7 +113,7 @@ class InteractionFragment : Fragment() {
                             updateListener?.onUpdate()
                         } else makeToast("Укажите глубину алгоритма от 1 до 3")
 
-                    } else makeToast("Укажите длину от 0 до 1000")
+                    } else makeToast("Укажите длину текста от 0 до 1000")
 
                 } else makeToast("Выберите исходный файл")
 
@@ -137,7 +136,7 @@ class InteractionFragment : Fragment() {
     private fun saveToDB(tag: String, text: String) {
         val db = CardsDatabase(requireContext())
         GlobalScope.launch {
-            db.cardsDao().insert(CardsEntity(0, "title", text, false))
+            db.cardsDao().insert(CardEntity(0, tag, text, false))
             db.cardsDao().deleteOverLimit()
         }
     }
@@ -148,12 +147,17 @@ class InteractionFragment : Fragment() {
 
     private val sourcesList = listOf(
         R.raw.jumoreski,
-        R.raw.bugurts
+        R.raw.bugurts,
+        R.raw.quotesmipt,
+        R.raw.news
     )
 
     private fun getGeneratedText(sourceId: Int, length: Int, depth: Int): String {
-        Log.d("Debug", "getGeneratedText($sourceId, $length, $depth)")
-        val textBuilder = TextBuilder(depth, requireContext(), sourcesList[sourceId])
+        val textBuilder = TextBuilder(
+            depth,
+            requireContext(),
+            sourcesList[sourceId]
+        )
         return textBuilder.getText(length)
     }
 }
