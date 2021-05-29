@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:padding="8dp">
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:layout_marginTop="@dimen/size_default"
-            android:padding="@dimen/size_default"
             android:id="@+id/interaction_fragment_spinner"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="2dp"
+            android:layout_marginTop="@dimen/size_default"
             android:layout_marginEnd="0dp"
             android:background="@drawable/rectangle_rounded_outline_arrow_down"
             android:clickable="true"
             android:entries="@array/source_list"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:padding="@dimen/size_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -53,11 +53,14 @@
             android:id="@+id/interaction_fragment_button_generate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
             android:height="@dimen/bar_height_default"
             android:text="Сгенерировать!"
             app:layout_constraintTop_toBottomOf="@+id/interaction_fragment_edittext_length" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/gray" />
 </androidx.cardview.widget.CardView>

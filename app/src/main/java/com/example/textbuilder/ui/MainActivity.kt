@@ -7,6 +7,8 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 import com.example.textbuilder.ui.display.DisplayFragment
 import com.example.textbuilder.ui.interaction.InteractionFragment
