@@ -38,13 +38,6 @@ class InteractionFragment : Fragment() {
         return rootView
     }
 
-    private fun hideKeyboard(focusedView: View, context: Context) {
-        focusedView.clearFocus()
-        val imm: InputMethodManager =
-            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(focusedView.windowToken, 0)
-    }
-
     private fun initSpinner(spinner: Spinner) {
         this.spinner = spinner
         val sourceList = resources.getStringArray(R.array.source_list)
@@ -59,16 +52,10 @@ class InteractionFragment : Fragment() {
 
     private fun initTextEditors(lengthEditText: EditText, depthEditText: EditText) {
         this.lengthEditText = lengthEditText
-        lengthEditText.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) hideKeyboard(v, requireContext())
-        }
         this.depthEditText = depthEditText
-        depthEditText.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) hideKeyboard(v, requireContext())
-        }
     }
 
-    var updateListener: UpdateListener? = null
+    private var updateListener: UpdateListener? = null
 
     // to allow activity pass command to update cards in ReadySourceFragment
     fun setListener(listener: UpdateListener) {
@@ -77,6 +64,7 @@ class InteractionFragment : Fragment() {
 
     private fun initButtonGenerate(generateButton: Button) {
         generateButton.setOnClickListener {
+            hideKeyboard()
             val lengthStr = lengthEditText?.text.toString()
             val depthStr = depthEditText?.text.toString()
             val type = spinner?.selectedItemPosition
@@ -124,8 +112,16 @@ class InteractionFragment : Fragment() {
         // TODO:
         //  Known issue: when you press enter on keyboard while editing text fields it triggers focusChangeListener
         generateButton.setOnFocusChangeListener { v, hasFocus -> // seems like a crutch and might cause issues
-            if (hasFocus) v.callOnClick()
+            //if (hasFocus) v.callOnClick()
         }
+    }
+
+    private fun hideKeyboard() {
+        val focusedView: View? = requireActivity().currentFocus
+        focusedView?.clearFocus()
+        val imm: InputMethodManager =
+            requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(focusedView?.windowToken, 0)
     }
 
     // TODO: No net database connection
