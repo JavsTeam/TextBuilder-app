@@ -107,13 +107,6 @@ class InteractionFragment : Fragment() {
 
             } else makeToast("Поля не заполнены")
         }
-
-        // I did it because android::focusableInTouchMode take tap to focus and doesn't count it as click
-        // TODO:
-        //  Known issue: when you press enter on keyboard while editing text fields it triggers focusChangeListener
-        generateButton.setOnFocusChangeListener { v, hasFocus -> // seems like a crutch and might cause issues
-            //if (hasFocus) v.callOnClick()
-        }
     }
 
     private fun hideKeyboard() {

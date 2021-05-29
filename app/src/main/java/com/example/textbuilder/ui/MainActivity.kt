@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity(), UpdateListener {
             isDisplayingAll = !isDisplayingAll
         }
         displayFragment?.displayAll() // crutch for first launch
-
-
     }
 
     override fun onUpdate() {
