@@ -38,7 +38,6 @@
 
 
                 <ImageButton
-                    style="@style/clickable_style"
                     android:id="@+id/toolbar_button_favorite"
                     android:src="@drawable/ic_favorite_filled"
                     android:background="@android:color/transparent"

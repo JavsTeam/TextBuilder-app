@@ -7,6 +7,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -66,6 +67,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
 
     private fun initShareButton(holder: ViewHolder, currentCard: Card) {
         holder.shareButton?.setOnClickListener {
+            it.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_scale))
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
             val shareBody = currentCard.text
@@ -80,6 +82,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
 
     private fun initCopyButton(holder: ViewHolder, currentCard: Card) {
         holder.copyButton?.setOnClickListener {
+            it.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_scale))
             makeToast("Скопировано!")
             context.copyToClipboard(currentCard.text)
         }
@@ -91,8 +94,6 @@ class Adapter(private val data: List<Card>, private val context: Context) :
         clipboard.setPrimaryClip(clip)
     }
 
-    // TODO: FATAL ERROR when try to delete card which doesn't exist in main DB app crashes
-    //  favHandler.deleteCard(favHandler.getCard(currentCard.id)) argument here being is null
     private fun initLikeButton(holder: ViewHolder, currentCard: Card) {
         holder.isFavorite = currentCard.isFavorite
 
@@ -103,6 +104,7 @@ class Adapter(private val data: List<Card>, private val context: Context) :
         }
 
         holder.likeButton?.setOnClickListener {
+            it.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_scale))
             if (holder.isFavorite) { // delete from fav
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite)
                 favHandler.deleteCard(favHandler.getCard(currentCard.id))
@@ -110,7 +112,9 @@ class Adapter(private val data: List<Card>, private val context: Context) :
                 holder.likeButton?.setImageResource(R.drawable.ic_favorite_filled)
                 favHandler.addCard(CardEntity(currentCard.id, currentCard.title, currentCard.text, true))
             }
-            cardHandler.changeFavoriteStatus(currentCard.id)
+            if(cardHandler.getCard(currentCard.id) != null) {
+                cardHandler.changeFavoriteStatus(currentCard.id)
+            }
             holder.isFavorite = !holder.isFavorite
             currentCard.isFavorite = !currentCard.isFavorite
         }

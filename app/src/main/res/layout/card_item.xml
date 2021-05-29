@@ -15,8 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_size_big"
-        android:layout_marginEnd="@dimen/size_small">
+        android:layout_marginStart="@dimen/text_size_big">
 
         <TextView
             android:id="@+id/card_text_main"

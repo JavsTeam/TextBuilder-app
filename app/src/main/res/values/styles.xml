@@ -3,11 +3,11 @@
 
     <style name="carditem_imagebutton_style">
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:foreground">@drawable/ripple_rounded</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
         <item name="android:layout_marginBottom">@dimen/size_default</item>
         <item name="android:layout_marginTop">@dimen/size_small</item>
+        <item name="android:layout_marginEnd">@dimen/size_small</item>
         <item name="android:paddingStart">1dp</item>
         <item name="android:paddingTop">3dp</item>
         <item name="android:layout_width">36dp</item>
