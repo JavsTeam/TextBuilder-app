@@ -1,12 +1,16 @@
 package com.example.textbuilder.ui
 
 import android.os.Bundle
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.textbuilder.R
 import com.example.textbuilder.ui.display.DisplayFragment
 import com.example.textbuilder.ui.interaction.InteractionFragment
+
 
 class MainActivity : AppCompatActivity(), UpdateListener {
     private var displayFragment: DisplayFragment? = null
@@ -18,17 +22,29 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         var isDisplayingAll = true
         displayFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_display) as DisplayFragment
-        val favoriteButton: ImageButton = findViewById(R.id.toolbar_button_favorite)
-        favoriteButton.setOnClickListener {
-            if (isDisplayingAll) displayFragment?.displayFavorite()
-            else displayFragment?.displayAll()
-            isDisplayingAll = !isDisplayingAll
-        }
-        displayFragment?.displayAll() // crutch for first launch
 
         val interactionFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_interaction) as InteractionFragment
         interactionFragment.setListener(this)
+
+        val buttonScaleAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.button_scale)
+        val favoriteButton: ImageButton = findViewById(R.id.toolbar_button_favorite)
+        val interactionFragmentLayout: View = findViewById(R.id.fragment_interaction)
+        favoriteButton.setOnClickListener {
+            it.startAnimation(buttonScaleAnimation)
+            if (isDisplayingAll) {
+                displayFragment?.displayFavorite()
+                interactionFragmentLayout.visibility = View.GONE
+            }
+            else {
+                displayFragment?.displayAll()
+                interactionFragmentLayout.visibility = View.VISIBLE
+            }
+            isDisplayingAll = !isDisplayingAll
+        }
+        displayFragment?.displayAll() // crutch for first launch
+
+
     }
 
     override fun onUpdate() {
