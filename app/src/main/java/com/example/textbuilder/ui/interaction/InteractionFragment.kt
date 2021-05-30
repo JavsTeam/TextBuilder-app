@@ -13,7 +13,6 @@ import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
 import com.example.textbuilder.db.CardEntity
 import com.example.textbuilder.service.FileHandler
-import com.example.textbuilder.service.Logger
 import com.example.textbuilder.service.PreferencesHandler
 import com.example.textbuilder.ui.UpdateListener
 import kotlinx.coroutines.GlobalScope
@@ -138,17 +137,10 @@ class InteractionFragment : Fragment() {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 
-//    private val sourcesList = listOf(
-//        R.raw.jumoreski,
-//        R.raw.bugurts,
-//        R.raw.quotesmipt,
-//        R.raw.news
-//    )
-
     private fun getGeneratedText(sourceId: Int, length: Int, depth: Int): String {
         val sourcesList = PreferencesHandler(requireActivity()).getSourceTagList()
-        val sourceText = FileHandler.getText(requireContext(), FileHandler.encodeFileTag(sourcesList[sourceId]))
-        Logger.d("$sourceId associated with  ${sourcesList[sourceId]} \n$sourceText")
+        val sourceText = FileHandler.getTextFromFile(requireContext(), FileHandler.encodeFileTag(sourcesList[sourceId]))
+
         val textBuilder = TextBuilder(
             depth,
             requireContext(),

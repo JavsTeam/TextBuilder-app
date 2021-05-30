@@ -19,8 +19,6 @@ public class TextBuilder {
     public TextBuilder(int depth, Context context, String text) {
         this.depth = depth;
         parseWordsFromText(depth, text);
-
-        Log.d("Debug", words.toString());
     }
 
     public String getText(int minLength) {

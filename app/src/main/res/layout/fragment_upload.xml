@@ -7,17 +7,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <EditText
             android:id="@+id/upload_fragment_edittext_filetag"
             style="@style/edittext_style_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:gravity="center"
-            android:text="test"
             android:hint="Выберите название исходного файла"
+            android:inputType="text"
             android:theme="@style/edittext_theme_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,22 +25,32 @@
 
         <Button
             android:id="@+id/upload_fragment_button_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:text="upload"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Загрузить в формате .txt"
+            app:layout_constraintEnd_toStartOf="@+id/upload_fragment_button_delete"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upload_fragment_edittext_filetag" />
+            app:layout_constraintTop_toBottomOf="@id/upload_fragment_edittext_filetag" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/gray"
+        <ImageButton
+            android:id="@+id/upload_fragment_button_delete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_delete_24"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/upload_fragment_button_upload"
+            app:layout_constraintTop_toBottomOf="@id/upload_fragment_edittext_filetag" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/gray" />
 </androidx.cardview.widget.CardView>

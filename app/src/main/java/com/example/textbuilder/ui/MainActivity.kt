@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.textbuilder.R
-import com.example.textbuilder.service.Logger
+import com.example.textbuilder.gen.handlers.Files
+import com.example.textbuilder.gen.handlers.Reader
+import com.example.textbuilder.service.FileHandler
 import com.example.textbuilder.service.PreferencesHandler
 import com.example.textbuilder.ui.display.DisplayFragment
 import com.example.textbuilder.ui.interaction.InteractionFragment
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        createDefaultSetOfSources()
 
         val sharedPreferences = getPreferences(MODE_PRIVATE)
         val preferencesHandler = PreferencesHandler(this)
@@ -69,6 +72,30 @@ class MainActivity : AppCompatActivity(), UpdateListener {
             isDisplayingAll = !isDisplayingAll
         }
         displayFragment?.displayAll() // crutch for first launch
+    }
+
+    private fun createDefaultSetOfSources() {
+        val pref = getPreferences(MODE_PRIVATE)
+        //pref.edit().remove("sourceTags").apply()
+        //pref.edit().putStringSet("sourceTags", HashSet<String>()).apply()
+        //pref.edit().remove("Юморески").remove("Бугурты").apply()
+        val preferencesHandler = PreferencesHandler(this)
+
+        createDefaultSource("Цитаты", preferencesHandler, R.raw.quotesmipt)
+        createDefaultSource("Бугурты", preferencesHandler, R.raw.bugurts)
+        createDefaultSource("Юморески", preferencesHandler, R.raw.jumoreski)
+        createDefaultSource("Новости", preferencesHandler, R.raw.news)
+    }
+
+    private fun createDefaultSource(fileTag: String, preferencesHandler: PreferencesHandler, resId: Int) {
+        if (FileHandler.isFileTagUnique(fileTag, preferencesHandler)) {
+            preferencesHandler.saveFileTag(fileTag)
+            FileHandler.saveTextToFile(
+                this,
+                FileHandler.encodeFileTag(fileTag),
+                Reader.readTxtFromRes(resId, this)
+            )
+        }
     }
 
     override fun onUpdate() {

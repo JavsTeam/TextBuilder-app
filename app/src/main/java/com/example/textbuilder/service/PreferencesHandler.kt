@@ -17,7 +17,7 @@ class PreferencesHandler(
 
     fun saveFileTag(fileTag: String, fileName: String) {
         val editor = preferences.edit()
-        addToSourceTag(fileTag, preferences)
+        addToSourceTag(fileTag)
         editor.putString(fileTag, fileName).apply()
     }
 
@@ -26,6 +26,20 @@ class PreferencesHandler(
             fileTag,
             FileHandler.encodeFileTag(fileTag)
         )
+    }
+
+    fun deleteFile(tagToDelete: String) {
+        val editor = preferences.edit()
+        editor.remove(tagToDelete).apply()
+        deleteFromSourceTag(tagToDelete)
+    }
+
+    private fun deleteFromSourceTag(tagToDelete: String) {
+        val editor = preferences.edit()
+        // I don't know why, but if you try to write initial set data disappears ofter runtime
+        val newSet = HashSet<String>(preferences.getStringSet(listTag, null))
+        newSet.remove(tagToDelete)
+        editor.putStringSet(listTag, newSet).apply()
     }
 
     fun isKeyPresent(key: String): Boolean {
@@ -39,7 +53,7 @@ class PreferencesHandler(
         return sourceTagList
     }
 
-    private fun addToSourceTag(tagToAdd: String, preferences: SharedPreferences) {
+    private fun addToSourceTag(tagToAdd: String) {
         val editor = preferences.edit()
         // I don't know why, but if you try to write initial set data disappears ofter runtime
         val newSet = HashSet<String>(preferences.getStringSet(listTag, null))
