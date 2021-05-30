@@ -1,7 +1,6 @@
 package com.example.textbuilder.ui.interaction
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,9 @@ import com.example.textbuilder.gen.TextBuilder
 import com.example.textbuilder.R
 import com.example.textbuilder.db.CardsDatabase
 import com.example.textbuilder.db.CardEntity
+import com.example.textbuilder.service.FileHandler
+import com.example.textbuilder.service.Logger
+import com.example.textbuilder.service.PreferencesHandler
 import com.example.textbuilder.ui.UpdateListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,8 +41,8 @@ class InteractionFragment : Fragment() {
     }
 
     private fun initSpinner(spinner: Spinner) {
+        val sourceList = PreferencesHandler(requireActivity()).getSourceTagList()
         this.spinner = spinner
-        val sourceList = resources.getStringArray(R.array.source_list)
         val adapter = ArrayAdapter(
             requireContext(),
             R.layout.interaction_spinner_item,
@@ -49,6 +51,7 @@ class InteractionFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.adapter = adapter
     }
+
 
     private fun initTextEditors(lengthEditText: EditText, depthEditText: EditText) {
         this.lengthEditText = lengthEditText
@@ -77,34 +80,35 @@ class InteractionFragment : Fragment() {
             if (lengthStr.isNotEmpty() && depthStr.isNotEmpty()) {
                 length = lengthStr.toInt()
                 depth = depthStr.toInt()
-                if (type != 0) {
-                    if (length > 0 && lengthStr.toInt() <= 1000) {
-                        if (depth > 0 && depthStr.toInt() <= 3) { // input ok
-                            when (type) {
-                                1 -> {
-                                    text = getTextFromServer(0, lengthStr.toInt(), depthStr.toInt())
-                                    saveToDB(sources[1], text)
-                                }
-                                2 -> {
-                                    text = getTextFromServer(1, lengthStr.toInt(), depthStr.toInt())
-                                    saveToDB(sources[2], text)
-                                }
-                                3 -> {
-                                    text = getTextFromServer(2, lengthStr.toInt(), depthStr.toInt())
-                                    saveToDB(sources[3], text)
-                                }
-                                4 -> {
-                                    text = getTextFromServer(3, lengthStr.toInt(), depthStr.toInt())
-                                    saveToDB(sources[4], text)
-                                }
+
+                if (length > 0 && lengthStr.toInt() <= 1000) {
+                    if (depth > 0 && depthStr.toInt() <= 3) { // input ok
+                        when (type) {
+                            0 -> {
+                                text = getTextFromServer(0, lengthStr.toInt(), depthStr.toInt())
+                                saveToDB(sources[0], text)
                             }
-                            updateListener?.onUpdate()
-                        } else makeToast("Укажите глубину алгоритма от 1 до 3")
+                            1 -> {
+                                text = getTextFromServer(1, lengthStr.toInt(), depthStr.toInt())
+                                saveToDB(sources[1], text)
+                            }
+                            2 -> {
+                                text = getTextFromServer(2, lengthStr.toInt(), depthStr.toInt())
+                                saveToDB(sources[2], text)
+                            }
+                            3 -> {
+                                text = getTextFromServer(3, lengthStr.toInt(), depthStr.toInt())
+                                saveToDB(sources[3], text)
+                            }
+                            4 -> {
+                                text = getTextFromServer(4, lengthStr.toInt(), depthStr.toInt())
+                                saveToDB(sources[4], text)
+                            }
+                        }
+                        updateListener?.onUpdate()
+                    } else makeToast("Укажите глубину алгоритма от 1 до 3")
 
-                    } else makeToast("Укажите длину текста от 0 до 1000")
-
-                } else makeToast("Выберите исходный файл")
-
+                } else makeToast("Укажите длину текста от 0 до 1000")
             } else makeToast("Поля не заполнены")
         }
     }
@@ -134,18 +138,21 @@ class InteractionFragment : Fragment() {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 
-    private val sourcesList = listOf(
-        R.raw.jumoreski,
-        R.raw.bugurts,
-        R.raw.quotesmipt,
-        R.raw.news
-    )
+//    private val sourcesList = listOf(
+//        R.raw.jumoreski,
+//        R.raw.bugurts,
+//        R.raw.quotesmipt,
+//        R.raw.news
+//    )
 
     private fun getGeneratedText(sourceId: Int, length: Int, depth: Int): String {
+        val sourcesList = PreferencesHandler(requireActivity()).getSourceTagList()
+        val sourceText = FileHandler.getText(requireContext(), FileHandler.encodeFileTag(sourcesList[sourceId]))
+        Logger.d("$sourceId associated with  ${sourcesList[sourceId]} \n$sourceText")
         val textBuilder = TextBuilder(
             depth,
             requireContext(),
-            sourcesList[sourceId]
+            sourceText
         )
         return textBuilder.getText(length)
     }

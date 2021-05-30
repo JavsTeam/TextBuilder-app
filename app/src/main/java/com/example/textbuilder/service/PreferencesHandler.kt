@@ -1,28 +1,23 @@
 package com.example.textbuilder.service
 
+import android.app.Activity
 import android.content.SharedPreferences
 import com.example.textbuilder.ui.MainActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-class PreferencesHandler(private val preferences: SharedPreferences) {
+class PreferencesHandler(
+    private val activity: Activity,
+    private val preferences: SharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE)
+) {
+    private val listTag = MainActivity.SOURCE_TAGS_LIST_TAG
+
     fun readFileName(fileTag: String): String {
         val fileName = preferences.getString(fileTag, "")
         return fileName ?: ""
     }
 
-    private fun addToSourceTags(tagToAdd: String, preferences: SharedPreferences) {
-        val listTag = MainActivity.SOURCE_TAGS_LIST_TAG
-        val editor = preferences.edit()
-        // I don't know why, but if you try to write initial set data disappears ofter runtime
-        val newSet = HashSet<String>(preferences.getStringSet(listTag, null))
-        newSet.add(tagToAdd)
-        editor.putStringSet(listTag, newSet).apply()
-    }
-
     fun saveFileTag(fileTag: String, fileName: String) {
         val editor = preferences.edit()
-        addToSourceTags(fileTag, preferences)
+        addToSourceTag(fileTag, preferences)
         editor.putString(fileTag, fileName).apply()
     }
 
@@ -35,6 +30,21 @@ class PreferencesHandler(private val preferences: SharedPreferences) {
 
     fun isKeyPresent(key: String): Boolean {
         return preferences.getString(key, "") != ""
+    }
+
+    fun getSourceTagList(): ArrayList<String> {
+        val set = preferences.getStringSet(listTag, null)
+        val sourceTagList = ArrayList<String>()
+        sourceTagList.addAll(set as Collection<String>)
+        return sourceTagList
+    }
+
+    private fun addToSourceTag(tagToAdd: String, preferences: SharedPreferences) {
+        val editor = preferences.edit()
+        // I don't know why, but if you try to write initial set data disappears ofter runtime
+        val newSet = HashSet<String>(preferences.getStringSet(listTag, null))
+        newSet.add(tagToAdd)
+        editor.putStringSet(listTag, newSet).apply()
     }
 
     fun logState() {

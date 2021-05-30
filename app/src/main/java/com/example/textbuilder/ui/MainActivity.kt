@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+
+        val sharedPreferences = getPreferences(MODE_PRIVATE)
+        val preferencesHandler = PreferencesHandler(this)
+        preferencesHandler.logState()
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -46,6 +51,7 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         val interactionFragment =
             navHostFragment.childFragmentManager.fragments[0] as InteractionFragment
         interactionFragment.setListener(this)
+        //interactionFragment.setSpinnerAdapter()
 
         val buttonScaleAnimation: Animation =
             AnimationUtils.loadAnimation(this, R.anim.button_scale)

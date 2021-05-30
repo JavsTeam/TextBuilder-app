@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.textbuilder.gen.handlers.Reader;
+import com.example.textbuilder.service.FileHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,9 +16,8 @@ public class TextBuilder {
 
     private final HashMap<String, Word> words = new HashMap<>();
 
-    public TextBuilder(int depth, Context context, int resourceId) {
+    public TextBuilder(int depth, Context context, String text) {
         this.depth = depth;
-        String text = Reader.readTxtFromRes(resourceId, context);
         parseWordsFromText(depth, text);
 
         Log.d("Debug", words.toString());

@@ -35,7 +35,6 @@ class UploadFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_upload, container, false)
 
-
         initUploadButton(rootView.findViewById(R.id.upload_fragment_button_upload))
         initFileTagEditText(rootView.findViewById(R.id.upload_fragment_edittext_filetag))
 
@@ -50,7 +49,7 @@ class UploadFragment : Fragment() {
 
     private fun initUploadButton(uploadButton: Button) {
         uploadButton.setOnClickListener {
-            preferencesHandler = PreferencesHandler(requireActivity().getPreferences(Activity.MODE_PRIVATE))
+            preferencesHandler = PreferencesHandler(requireActivity())
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 type = "*/*"
             }
@@ -64,11 +63,11 @@ class UploadFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_TEXT_GET && resultCode == Activity.RESULT_OK) {
             val context = requireContext()
-            val activity = requireActivity() as MainActivity // safe owing to that there is no other activities
             val documentUri: Uri? = data?.data
             val fileTag = getFileTag()
 
             if (documentUri != null && fileTag.isNotEmpty()) {
+                fileNameEditText?.setText("")
                 val fileName = FileHandler.encodeFileTag(fileTag)
                 val text = getTextFromTxtByUri(documentUri)
 
@@ -76,6 +75,8 @@ class UploadFragment : Fragment() {
                 context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                     it.write(text.toByteArray())
                 }
+                Toast.makeText(context, "Исходный файл добавлен", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 Toast.makeText(context, "Введите другое название для исходника", Toast.LENGTH_SHORT)
                     .show()
