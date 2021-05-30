@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/interactionFragment">
 
     <fragment
         android:id="@+id/interactionFragment"
@@ -10,17 +11,17 @@
         android:label="interaction"
         tools:layout="@layout/fragment_interaction">
         <action
-            android:id="@+id/action_interactionFragment_to_uploadFragment3"
+            android:id="@+id/action_interactionFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/uploadFragment"
         android:name="com.example.textbuilder.ui.upload.UploadFragment"
-        android:label="UploadFragment"
+        android:label="upload"
         tools:layout="@layout/fragment_upload">
         <action
-            android:id="@+id/action_uploadFragment_to_interactionFragment2"
+            android:id="@+id/action_uploadFragment_to_interactionFragment"
             app:destination="@id/interactionFragment" />
     </fragment>
 

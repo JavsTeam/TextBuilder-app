@@ -8,26 +8,23 @@
     tools:context=".ui.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"> <!---->
+            app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed">
 
-            <androidx.cardview.widget.CardView
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <fragment
-                    android:id="@+id/fragment_interaction"
-                    android:name="com.example.textbuilder.ui.interaction.InteractionFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/bar_height_default"
-                    tools:layout="@layout/fragment_interaction"/> <!---->
-            </androidx.cardview.widget.CardView>
-
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bar_height_default"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph" />
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
@@ -82,5 +79,12 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:layout="@layout/fragment_display" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        app:menu="@menu/menu_bottom_navigation" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

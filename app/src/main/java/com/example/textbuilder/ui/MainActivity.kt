@@ -7,11 +7,17 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textbuilder.R
 import com.example.textbuilder.ui.display.DisplayFragment
 import com.example.textbuilder.ui.interaction.InteractionFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity(), UpdateListener {
@@ -21,26 +27,44 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.main_bottom_navigation_view)
+        bottomNavigationView.setupWithNavController(navController)
+
+
+
+
+
+
+
+
+
+
+
+
         var isDisplayingAll = true
         displayFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_display) as DisplayFragment
 
-        val interactionFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_interaction) as InteractionFragment
-        interactionFragment.setListener(this)
+       // val interactionFragment =
+        //    supportFragmentManager.findFragmentById(R.id.fragment_interaction) as InteractionFragment
+        //interactionFragment.setListener(this)
 
         val buttonScaleAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.button_scale)
         val favoriteButton: ImageButton = findViewById(R.id.toolbar_button_favorite)
-        val interactionFragmentLayout: View = findViewById(R.id.fragment_interaction)
+        //val interactionFragmentLayout: View = findViewById(R.id.fragment_interaction)
         favoriteButton.setOnClickListener {
             it.startAnimation(buttonScaleAnimation)
             if (isDisplayingAll) {
                 displayFragment?.displayFavorite()
-                interactionFragmentLayout.visibility = View.GONE
+               // interactionFragmentLayout.visibility = View.GONE
             }
             else {
                 displayFragment?.displayAll()
-                interactionFragmentLayout.visibility = View.VISIBLE
+               // interactionFragmentLayout.visibility = View.VISIBLE
             }
             isDisplayingAll = !isDisplayingAll
         }
