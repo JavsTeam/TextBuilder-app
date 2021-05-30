@@ -19,6 +19,7 @@ import com.example.textbuilder.service.FileHandler
 import com.example.textbuilder.service.FileHandler.Companion.isFileTagUnique
 import com.example.textbuilder.service.Logger
 import com.example.textbuilder.service.PreferencesHandler
+import com.example.textbuilder.ui.MainActivity
 import java.io.FileNotFoundException
 import java.util.*
 
@@ -33,7 +34,6 @@ class UploadFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_upload, container, false)
-
 
 
         initUploadButton(rootView.findViewById(R.id.upload_fragment_button_upload))
@@ -64,6 +64,7 @@ class UploadFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_TEXT_GET && resultCode == Activity.RESULT_OK) {
             val context = requireContext()
+            val activity = requireActivity() as MainActivity // safe owing to that there is no other activities
             val documentUri: Uri? = data?.data
             val fileTag = getFileTag()
 
