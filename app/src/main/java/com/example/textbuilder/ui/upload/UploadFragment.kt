@@ -3,8 +3,10 @@ package com.example.textbuilder.ui.upload
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +15,17 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.textbuilder.R
-import com.example.textbuilder.service.FileNameConverter
+import com.example.textbuilder.service.FileHandler
+import com.example.textbuilder.service.FileHandler.Companion.isFileTagUnique
+import com.example.textbuilder.service.Logger
 import com.example.textbuilder.service.PreferencesHandler
 import java.io.FileNotFoundException
-import java.math.BigInteger
-import java.security.MessageDigest
 import java.util.*
 
 
 class UploadFragment : Fragment() {
     private var fileNameEditText: EditText? = null
+    private var preferencesHandler: PreferencesHandler? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +33,8 @@ class UploadFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_upload, container, false)
+
+
 
         initUploadButton(rootView.findViewById(R.id.upload_fragment_button_upload))
         initFileTagEditText(rootView.findViewById(R.id.upload_fragment_edittext_filetag))
@@ -45,6 +50,7 @@ class UploadFragment : Fragment() {
 
     private fun initUploadButton(uploadButton: Button) {
         uploadButton.setOnClickListener {
+            preferencesHandler = PreferencesHandler(requireActivity().getPreferences(Activity.MODE_PRIVATE))
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 type = "*/*"
             }
@@ -60,10 +66,12 @@ class UploadFragment : Fragment() {
             val context = requireContext()
             val documentUri: Uri? = data?.data
             val fileTag = getFileTag()
+
             if (documentUri != null && fileTag.isNotEmpty()) {
-                val fileName = FileNameConverter.encodeFileTag(fileTag)
+                val fileName = FileHandler.encodeFileTag(fileTag)
                 val text = getTextFromTxtByUri(documentUri)
-                PreferencesHandler.saveFileTagInPreferences(requireActivity(), fileTag, fileName)
+
+                preferencesHandler?.saveFileTag(fileTag, fileName)
                 context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                     it.write(text.toByteArray())
                 }
@@ -74,16 +82,8 @@ class UploadFragment : Fragment() {
         }
     }
 
-
-    private fun read(fileTag: String) {
-        val preferences = requireActivity().getPreferences(Activity.MODE_PRIVATE)
-        val savedFileName = preferences.getString(fileTag, "")
-        println(savedFileName)
-        requireContext().openFileInput(savedFileName).bufferedReader().useLines { lines ->
-            lines.forEach {
-                println(it)
-            }
-        }
+    private fun debugReadFile(context: Context, fileName: String) {
+        Log.d("Debug", FileHandler.getText(context, fileName))
     }
 
     private fun getTextFromTxtByUri(txtUri: Uri): String {
@@ -101,13 +101,12 @@ class UploadFragment : Fragment() {
     // TODO: update restrictions for filename
     private fun getFileTag(): String {
         val fileTag = fileNameEditText?.text.toString()
-        if (fileTag.isNotEmpty() && isFileTagUnique(fileTag)) {
+        if(!isFileTagUnique(fileTag, preferencesHandler!!)) {
+            Toast.makeText(requireContext(), "Файл перезаписан", Toast.LENGTH_SHORT).show()
+        }
+        if (fileTag.isNotEmpty()) {
             return fileTag
         }
         return ""
-    }
-
-    private fun isFileTagUnique(fileTag: String): Boolean {
-
     }
 }

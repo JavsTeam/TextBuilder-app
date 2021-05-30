@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:gravity="center"
+            android:text="test"
             android:hint="Выберите название исходного файла"
             android:theme="@style/edittext_theme_default"
             app:layout_constraintEnd_toEndOf="parent"
