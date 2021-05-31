@@ -10,12 +10,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.textbuilder.R
-import com.example.textbuilder.gen.handlers.Files
 import com.example.textbuilder.gen.handlers.Reader
 import com.example.textbuilder.service.FileHandler
 import com.example.textbuilder.service.PreferencesHandler
 import com.example.textbuilder.ui.display.DisplayFragment
-import com.example.textbuilder.ui.interaction.InteractionFragment
+import com.example.textbuilder.ui.ready.ReadyFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity(), UpdateListener {
             supportFragmentManager.findFragmentById(R.id.fragment_display) as DisplayFragment
 
         val interactionFragment =
-            navHostFragment.childFragmentManager.fragments[0] as InteractionFragment
+            navHostFragment.childFragmentManager.fragments[0] as ReadyFragment
         interactionFragment.setListener(this)
         //interactionFragment.setSpinnerAdapter()
 

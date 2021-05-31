@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/interactionFragment"
+        android:id="@+id/readyFragment"
         android:icon="@drawable/ic_done"
         android:title="Готовые"/>
     <item
@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_download_24"
         android:title="Загрузить" />
     <item
-        android:id="@+id/action_mail"
+        android:id="@+id/pasteFragment"
         android:icon="@drawable/ic_paste_24"
         android:title="Вставить" />
 </menu>

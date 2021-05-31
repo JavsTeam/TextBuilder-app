@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/interactionFragment">
+    app:startDestination="@id/readyFragment">
 
     <fragment
-        android:id="@+id/interactionFragment"
-        android:name="com.example.textbuilder.ui.interaction.InteractionFragment"
+        android:id="@+id/readyFragment"
+        android:name="com.example.textbuilder.ui.ready.ReadyFragment"
         android:label="interaction"
-        tools:layout="@layout/fragment_interaction">
+        tools:layout="@layout/fragment_ready">
         <action
             android:id="@+id/action_interactionFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
+        <action
+            android:id="@+id/action_readyFragment_to_pasteFragment"
+            app:destination="@id/pasteFragment" />
     </fragment>
 
     <fragment
@@ -22,7 +25,23 @@
         tools:layout="@layout/fragment_upload">
         <action
             android:id="@+id/action_uploadFragment_to_interactionFragment"
-            app:destination="@id/interactionFragment" />
+            app:destination="@id/readyFragment" />
+        <action
+            android:id="@+id/action_uploadFragment_to_pasteFragment"
+            app:destination="@id/pasteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pasteFragment"
+        android:name="com.example.textbuilder.ui.paste.PasteFragment"
+        android:label="PasteFragment"
+        tools:layout="@layout/fragment_paste">
+        <action
+            android:id="@+id/action_pasteFragment_to_readyFragment"
+            app:destination="@id/readyFragment" />
+        <action
+            android:id="@+id/action_pasteFragment_to_uploadFragment"
+            app:destination="@id/uploadFragment" />
     </fragment>
 
 </navigation>

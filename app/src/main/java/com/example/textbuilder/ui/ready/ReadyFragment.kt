@@ -1,4 +1,4 @@
-package com.example.textbuilder.ui.interaction
+package com.example.textbuilder.ui.ready
 
 import android.app.Activity
 import android.os.Bundle
@@ -18,7 +18,7 @@ import com.example.textbuilder.ui.UpdateListener
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class InteractionFragment : Fragment() {
+class ReadyFragment : Fragment() {
     private var spinner: Spinner? = null
     private var lengthEditText: EditText? = null
     private var depthEditText: EditText? = null
@@ -28,13 +28,13 @@ class InteractionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_interaction, container, false)
-        initSpinner(rootView.findViewById(R.id.interaction_fragment_spinner))
+        val rootView = inflater.inflate(R.layout.fragment_ready, container, false)
+        initSpinner(rootView.findViewById(R.id.ready_fragment_spinner))
         initTextEditors(
-            rootView.findViewById(R.id.interaction_fragment_edittext_length),
-            rootView.findViewById(R.id.interaction_fragment_edittext_depth)
+            rootView.findViewById(R.id.ready_fragment_edittext_length),
+            rootView.findViewById(R.id.ready_fragment_edittext_depth)
         )
-        initButtonGenerate(rootView.findViewById(R.id.interaction_fragment_button_generate))
+        initButtonGenerate(rootView.findViewById(R.id.ready_fragment_button_generate))
 
         return rootView
     }
