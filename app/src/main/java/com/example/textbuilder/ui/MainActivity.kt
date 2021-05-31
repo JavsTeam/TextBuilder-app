@@ -9,13 +9,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.chaquo.python.*
+import com.chaquo.python.android.AndroidPlatform
 import com.example.textbuilder.R
 import com.example.textbuilder.gen.handlers.Reader
 import com.example.textbuilder.service.FileHandler
+import com.example.textbuilder.service.Logger
 import com.example.textbuilder.service.PreferencesHandler
 import com.example.textbuilder.ui.display.DisplayFragment
 import com.example.textbuilder.ui.ready.ReadyFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), UpdateListener {
@@ -30,6 +35,25 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        var py: Python? = null
+        if (!Python.isStarted()) {
+            Python.start(AndroidPlatform(this))
+            py = Python.getInstance()
+        } else {
+            py = Python.getInstance()
+        }
+
+        GlobalScope.launch {
+            val test = py.getModule("main")
+            //Logger.d("Test: ${test.toString()}")
+            val res = test.callAttr("get_posts", 100, "bugurt_thread")
+            Logger.d("Res: $res")
+        }
+
+//        val res = test?.call(3, "jumoreski")
+//        Logger.d("Res: ${res.toString()}")
+//        val list = res?.asList()
+//        Logger.d("List: ${list.toString()}")
 
         createDefaultSetOfSources()
 
@@ -86,7 +110,11 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         createDefaultSource("Новости", preferencesHandler, R.raw.news)
     }
 
-    private fun createDefaultSource(fileTag: String, preferencesHandler: PreferencesHandler, resId: Int) {
+    private fun createDefaultSource(
+        fileTag: String,
+        preferencesHandler: PreferencesHandler,
+        resId: Int
+    ) {
         if (FileHandler.isFileTagUnique(fileTag, preferencesHandler)) {
             preferencesHandler.saveFileTag(fileTag)
             FileHandler.saveTextToFile(

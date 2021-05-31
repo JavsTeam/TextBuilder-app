@@ -17,6 +17,7 @@ import com.example.textbuilder.service.FileHandler
 import com.example.textbuilder.service.FileHandler.Companion.isFileTagUnique
 import com.example.textbuilder.service.Misc
 import com.example.textbuilder.service.PreferencesHandler
+import com.example.textbuilder.ui.upload.dialog.PickTagDialogFragment
 
 
 class UploadFragment : Fragment() {
@@ -39,6 +40,10 @@ class UploadFragment : Fragment() {
 
     private fun initDeleteButton(deleteButton: ImageButton) {
         deleteButton.setOnClickListener {
+            val myDialogFragment = PickTagDialogFragment()
+            val manager = requireActivity().supportFragmentManager
+            myDialogFragment.show(manager, "myDialog")
+
             preferencesHandler = PreferencesHandler(requireActivity())
             val fileTag = fileTagEditText?.text.toString()
             if (fileTag.isNotEmpty()) {

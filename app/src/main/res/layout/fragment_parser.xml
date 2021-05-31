@@ -11,12 +11,13 @@
         android:padding="8dp">
 
         <EditText
-            android:id="@+id/paste_fragment_edittext_filetag"
+            android:id="@+id/parser_fragment_edittext_filetag"
             style="@style/edittext_style_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:gravity="center"
-            android:hint="Выберите название исходного файла"
+            android:hint="Название исходного файла"
             android:inputType="text"
             android:theme="@style/edittext_theme_default"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,27 +25,41 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/paste_fragment_edit_text"
+            android:id="@+id/parser_fragment_edittext_link"
             style="@style/edittext_style_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@android:string/paste_as_plain_text"
+            android:autofillHints=""
             android:gravity="center"
-            android:hint="Вставьте текст сюда"
+            android:hint="Ссылка на сообщество"
             android:inputType="text"
             android:theme="@style/edittext_theme_default"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paste_fragment_edittext_filetag" />
+            app:layout_constraintTop_toBottomOf="@+id/parser_fragment_edittext_filetag" />
+
+        <EditText
+            android:id="@+id/parser_fragment_edittext_amount"
+            style="@style/edittext_style_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:gravity="center"
+            android:hint="Количество постов"
+            android:inputType="number"
+            android:theme="@style/edittext_theme_default"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/parser_fragment_edittext_link" />
 
         <Button
-            android:id="@+id/paste_fragment_button_save"
+            android:id="@+id/parser_fragment_button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Сохранить"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/paste_fragment_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/parser_fragment_edittext_amount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

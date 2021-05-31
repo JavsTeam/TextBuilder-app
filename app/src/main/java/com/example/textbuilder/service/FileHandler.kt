@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import com.example.textbuilder.gen.handlers.Reader
 import java.io.FileNotFoundException
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -11,6 +12,22 @@ import java.util.*
 
 class FileHandler {
     companion object {
+        fun addNewFileWithTextAndSaveTag(
+            preferencesHandler: PreferencesHandler,
+            context: Context,
+            fileTag: String,
+            text: String
+        ) {
+            if (isFileTagUnique(fileTag, preferencesHandler)) {
+                preferencesHandler.saveFileTag(fileTag)
+                saveTextToFile(
+                    context,
+                    encodeFileTag(fileTag),
+                    text
+                )
+            }
+        }
+
         fun saveTextToFile(context: Context, fileName: String, text: String) {
             context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                 it.write(text.toByteArray())
@@ -47,7 +64,7 @@ class FileHandler {
         }
 
         fun deleteFile(context: Context, fileName: String) {
-            context.deleteFile(fileName)
+            Logger.d("Trying to delete file $fileName \nResult: ${if (context.deleteFile(fileName)) "OK" else "ERROR"}")
         }
 
         fun isTagsSame(fileTag: String, encodedName: String): Boolean {

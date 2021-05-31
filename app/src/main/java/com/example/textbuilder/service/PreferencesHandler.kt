@@ -1,6 +1,7 @@
 package com.example.textbuilder.service
 
 import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import com.example.textbuilder.ui.MainActivity
 
@@ -26,6 +27,17 @@ class PreferencesHandler(
             fileTag,
             FileHandler.encodeFileTag(fileTag)
         )
+    }
+
+    fun clearPreferences(context: Context) {
+        preferences.getStringSet(listTag, null)?.forEach {
+            FileHandler.deleteFile(context, FileHandler.encodeFileTag(it))
+        }
+
+        preferences.edit()
+            .clear()
+            .putStringSet(listTag ,HashSet<String>())
+            .apply()
     }
 
     fun deleteFile(tagToDelete: String) {

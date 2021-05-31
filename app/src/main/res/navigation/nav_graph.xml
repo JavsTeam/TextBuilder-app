@@ -15,7 +15,7 @@
             app:destination="@id/uploadFragment" />
         <action
             android:id="@+id/action_readyFragment_to_pasteFragment"
-            app:destination="@id/pasteFragment" />
+            app:destination="@id/parserFragment" />
     </fragment>
 
     <fragment
@@ -28,14 +28,14 @@
             app:destination="@id/readyFragment" />
         <action
             android:id="@+id/action_uploadFragment_to_pasteFragment"
-            app:destination="@id/pasteFragment" />
+            app:destination="@id/parserFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/pasteFragment"
-        android:name="com.example.textbuilder.ui.paste.PasteFragment"
+        android:id="@+id/parserFragment"
+        android:name="com.example.textbuilder.ui.paste.ParserFragment"
         android:label="PasteFragment"
-        tools:layout="@layout/fragment_paste">
+        tools:layout="@layout/fragment_parser">
         <action
             android:id="@+id/action_pasteFragment_to_readyFragment"
             app:destination="@id/readyFragment" />

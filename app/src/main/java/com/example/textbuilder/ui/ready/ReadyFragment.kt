@@ -70,8 +70,6 @@ class ReadyFragment : Fragment() {
             val lengthStr = lengthEditText?.text.toString()
             val depthStr = depthEditText?.text.toString()
             val type = spinner?.selectedItemPosition
-            val sources = resources.getStringArray(R.array.source_list)
-            val text: String
 
             val length: Int
             val depth: Int
@@ -82,34 +80,18 @@ class ReadyFragment : Fragment() {
 
                 if (length > 0 && lengthStr.toInt() <= 1000) {
                     if (depth > 0 && depthStr.toInt() <= 3) { // input ok
-                        when (type) {
-                            0 -> {
-                                text = getTextFromServer(0, lengthStr.toInt(), depthStr.toInt())
-                                saveToDB(sources[0], text)
-                            }
-                            1 -> {
-                                text = getTextFromServer(1, lengthStr.toInt(), depthStr.toInt())
-                                saveToDB(sources[1], text)
-                            }
-                            2 -> {
-                                text = getTextFromServer(2, lengthStr.toInt(), depthStr.toInt())
-                                saveToDB(sources[2], text)
-                            }
-                            3 -> {
-                                text = getTextFromServer(3, lengthStr.toInt(), depthStr.toInt())
-                                saveToDB(sources[3], text)
-                            }
-                            4 -> {
-                                text = getTextFromServer(4, lengthStr.toInt(), depthStr.toInt())
-                                saveToDB(sources[4], text)
-                            }
-                        }
+                        handleTextGeneration(type!!, length, depth)
                         updateListener?.onUpdate()
                     } else makeToast("Укажите глубину алгоритма от 1 до 3")
-
                 } else makeToast("Укажите длину текста от 0 до 1000")
             } else makeToast("Поля не заполнены")
         }
+    }
+
+    private fun handleTextGeneration(sourceId: Int, length: Int, depth: Int) {
+        val sourcesList = PreferencesHandler(requireActivity()).getSourceTagList()
+        val text = getText(sourceId, length, depth)
+        saveToDB(sourcesList[sourceId], text)
     }
 
     private fun hideKeyboard() {
@@ -121,7 +103,7 @@ class ReadyFragment : Fragment() {
     }
 
     // TODO: No net database connection
-    private fun getTextFromServer(sourceId: Int, length: Int, depth: Int): String {
+    private fun getText(sourceId: Int, length: Int, depth: Int): String {
         return getGeneratedText(sourceId, length, depth)
     }
 
@@ -139,7 +121,10 @@ class ReadyFragment : Fragment() {
 
     private fun getGeneratedText(sourceId: Int, length: Int, depth: Int): String {
         val sourcesList = PreferencesHandler(requireActivity()).getSourceTagList()
-        val sourceText = FileHandler.getTextFromFile(requireContext(), FileHandler.encodeFileTag(sourcesList[sourceId]))
+        val sourceText = FileHandler.getTextFromFile(
+            requireContext(),
+            FileHandler.encodeFileTag(sourcesList[sourceId])
+        )
 
         val textBuilder = TextBuilder(
             depth,
