@@ -19,7 +19,7 @@ android {
 
         python {
             pip {
-                install "requests"
+                install "-r", "requirements.txt"
             }
         }
         ndk {
