@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/readyFragment"
-        android:name="com.example.textbuilder.ui.ready.ReadyFragment"
+        android:name="com.textbuilder.ui.ready.ReadyFragment"
         android:label="interaction"
         tools:layout="@layout/fragment_ready">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/uploadFragment"
-        android:name="com.example.textbuilder.ui.upload.UploadFragment"
+        android:name="com.textbuilder.ui.upload.UploadFragment"
         android:label="upload"
         tools:layout="@layout/fragment_upload">
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/parserFragment"
-        android:name="com.example.textbuilder.ui.paste.ParserFragment"
+        android:name="com.textbuilder.ui.paste.ParserFragment"
         android:label="PasteFragment"
         tools:layout="@layout/fragment_parser">
         <action

@@ -11,5 +11,5 @@
     <item
         android:id="@+id/parserFragment"
         android:icon="@drawable/ic_paste_24"
-        android:title="Вставить" />
+        android:title="Ссылка" />
 </menu>

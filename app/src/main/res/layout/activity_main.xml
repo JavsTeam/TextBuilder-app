@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    tools:context="com.textbuilder.ui.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:background="@color/white"
@@ -74,7 +74,7 @@
 
     <fragment
         android:id="@+id/fragment_display"
-        android:name="com.example.textbuilder.ui.display.DisplayFragment"
+        android:name="com.textbuilder.ui.display.DisplayFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

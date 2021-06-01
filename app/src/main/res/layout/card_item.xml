@@ -10,7 +10,7 @@
     android:layout_marginBottom="4dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp"
-    tools:context=".ui.display.DisplayFragment">
+    tools:context="com.textbuilder.ui.display.DisplayFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
