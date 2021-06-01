@@ -17,7 +17,6 @@ import com.textbuilder.ui.display.DisplayFragment
 import com.textbuilder.ui.generate.GenerateFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 class MainActivity : AppCompatActivity(), UpdateListener {
     companion object {
         const val SOURCE_TAGS_LIST_TAG = "sourceTags"
@@ -72,6 +71,7 @@ class MainActivity : AppCompatActivity(), UpdateListener {
 
     private fun createDefaultSetOfSources() {
         val preferencesHandler = PreferencesHandler(this)
+        preferencesHandler.createEmptySetIfNecessary()
 
         createDefaultSource("Цитаты", preferencesHandler, R.raw.quotesmipt)
         createDefaultSource("Бугурты", preferencesHandler, R.raw.bugurts)

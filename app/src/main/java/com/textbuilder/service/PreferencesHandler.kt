@@ -29,6 +29,14 @@ class PreferencesHandler(
         )
     }
 
+    fun createEmptySetIfNecessary() {
+        if(!preferences.contains(listTag)) {
+            preferences.edit()
+                .putStringSet(listTag, HashSet<String>())
+                .apply()
+        }
+    }
+
     fun clearPreferences(context: Context) {
         preferences.getStringSet(listTag, null)?.forEach {
             FileHandler.deleteFile(context, FileHandler.encodeFileTag(it))
