@@ -41,6 +41,7 @@ class CardHandler(private val database: CardsOperational) {
                 )
             }
         }
+        Thread.sleep(50)
         return data
     }
 

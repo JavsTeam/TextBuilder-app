@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -17,7 +19,7 @@ import com.textbuilder.service.FileHandler
 import com.textbuilder.service.FileHandler.Companion.isFileTagUnique
 import com.textbuilder.service.Misc
 import com.textbuilder.service.PreferencesHandler
-import com.textbuilder.ui.upload.dialog.PickTagDialogFragment
+import com.textbuilder.ui.upload.dialog.DeleteByTagDialogFragment
 
 
 class UploadFragment : Fragment() {
@@ -39,24 +41,14 @@ class UploadFragment : Fragment() {
     }
 
     private fun initDeleteButton(deleteButton: ImageButton) {
+        val buttonScaleAnimation: Animation =
+            AnimationUtils.loadAnimation(requireContext(), R.anim.button_scale)
         deleteButton.setOnClickListener {
-            val myDialogFragment = PickTagDialogFragment()
+            it.startAnimation(buttonScaleAnimation)
+            val myDialogFragment = DeleteByTagDialogFragment()
             val manager = requireActivity().supportFragmentManager
-            myDialogFragment.show(manager, "myDialog")
 
-            preferencesHandler = PreferencesHandler(requireActivity())
-            val fileTag = fileTagEditText?.text.toString()
-            if (fileTag.isNotEmpty()) {
-                if (!isFileTagUnique(fileTag, preferencesHandler!!)) {
-                    PreferencesHandler(requireActivity()).deleteFile(fileTag)
-                    FileHandler.deleteFile(requireContext(), FileHandler.encodeFileTag(fileTag))
-                    fileTagEditText?.setText("")
-                    Misc.hideKeyboard(requireActivity())
-                    makeToast("Файл успешно удален")
-                }
-                makeToast("Файла с указанным именем не существует")
-            }
-            makeToast("Укажите название файла для его удаления")
+            myDialogFragment.show(manager, "DeleteByTagDialog")
         }
     }
 

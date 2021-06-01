@@ -11,6 +11,7 @@ import com.example.textbuilder.R
 import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.FavoriteCardsDatabase
 import com.textbuilder.db.providers.CardHandler
+import com.textbuilder.service.Logger
 import com.textbuilder.ui.display.recyclerview.Adapter
 import com.textbuilder.ui.display.recyclerview.Card
 import kotlinx.coroutines.GlobalScope
@@ -37,10 +38,8 @@ class DisplayFragment : Fragment() {
     }
 
     fun displayFavorite() {
-        setRecyclerViewAdapter(getFavoriteCards(getCardsData()))
-
-        val cardHandler = CardHandler(FavoriteCardsDatabase(requireContext()))
-        setRecyclerViewAdapter(cardHandler.getAllCards())
+        val handler = CardHandler(FavoriteCardsDatabase(requireContext()))
+        setRecyclerViewAdapter(handler.getAllCards())
     }
 
     fun displayAll() {
@@ -52,34 +51,8 @@ class DisplayFragment : Fragment() {
         recyclerView?.adapter = Adapter(cardData, requireContext())
     }
 
-    private fun getFavoriteCards(cards: ArrayList<Card>): ArrayList<Card> {
-        Thread.sleep(20) // Waiting for db
-        val result: ArrayList<Card> = ArrayList()
-        for (card: Card in cards) {
-            if (card.isFavorite) {
-                result.add(card)
-            }
-        }
-        return result
-    }
-
     private fun getCardsData(): ArrayList<Card> {
-        val data = ArrayList<Card>()
         val db = CardsDatabase(requireContext())
-        GlobalScope.launch {
-            val dataFromDB = db.cardsDao().getAll()
-            dataFromDB.forEach {
-                data.add(
-                    Card(
-                        it.id,
-                        it.title,
-                        it.content,
-                        it.isFavorite
-                    )
-                )
-            }
-        }
-        Thread.sleep(50)
-        return data
+        return CardHandler(db).getAllCards()
     }
 }

@@ -14,7 +14,7 @@ import com.textbuilder.gen.handlers.Reader
 import com.textbuilder.service.FileHandler
 import com.textbuilder.service.PreferencesHandler
 import com.textbuilder.ui.display.DisplayFragment
-import com.textbuilder.ui.ready.ReadyFragment
+import com.textbuilder.ui.generate.GenerateFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -31,14 +31,6 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-
-
-//        val res = test?.call(3, "jumoreski")
-//        Logger.d("Res: ${res.toString()}")
-//        val list = res?.asList()
-//        Logger.d("List: ${list.toString()}")
-
-        val sharedPreferences = getPreferences(MODE_PRIVATE)
         val preferencesHandler = PreferencesHandler(this)
         preferencesHandler.logState()
 
@@ -52,15 +44,13 @@ class MainActivity : AppCompatActivity(), UpdateListener {
             findViewById(R.id.main_bottom_navigation_view)
         bottomNavigationView.setupWithNavController(navController)
 
-
         var isDisplayingAll = true
         displayFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_display) as DisplayFragment
 
         val interactionFragment =
-            navHostFragment.childFragmentManager.fragments[0] as ReadyFragment
+            navHostFragment.childFragmentManager.fragments[0] as GenerateFragment
         interactionFragment.setListener(this)
-        //interactionFragment.setSpinnerAdapter()
 
         val buttonScaleAnimation: Animation =
             AnimationUtils.loadAnimation(this, R.anim.button_scale)

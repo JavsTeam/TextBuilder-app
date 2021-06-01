@@ -21,12 +21,6 @@ android {
             pip {
                 install "requests"
             }
-
-            // If Chaquopy fails to find Python on your build machine, enable the following
-            // line and edit it to point to Python 3.5 or later.
-            // buildPython "C:/Python36/python.exe"
-
-            // staticProxy "vkparser"
         }
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"

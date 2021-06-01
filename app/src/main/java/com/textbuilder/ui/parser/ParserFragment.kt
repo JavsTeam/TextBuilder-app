@@ -1,11 +1,14 @@
-package com.textbuilder.ui.paste
+package com.textbuilder.ui.parser
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import com.chaquo.python.PyException
 import com.chaquo.python.Python
@@ -15,6 +18,7 @@ import com.textbuilder.service.FileHandler
 import com.textbuilder.service.Logger
 import com.textbuilder.service.Misc
 import com.textbuilder.service.PreferencesHandler
+import com.textbuilder.ui.upload.dialog.DeleteByTagDialogFragment
 
 class ParserFragment : Fragment() {
     override fun onCreateView(
@@ -25,6 +29,7 @@ class ParserFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_parser, container, false)
 
         init(rootView)
+        initDeleteButton(rootView.findViewById(R.id.parser_fragment_button_delete))
 
         return rootView
     }
@@ -38,33 +43,33 @@ class ParserFragment : Fragment() {
         saveButton.setOnClickListener {
             val tag = tagEditText.text.toString()
             val link = linkEditText.text.toString()
-            val amount = amountEditText.text.toString()
+
 
             if (tag.isNotEmpty()) {
                 if (link.isNotEmpty()) {
-                    if (amount.isNotEmpty()) {
-                        try {
-                            val text = getParsedText(link, amount.toInt())
-                            FileHandler.addNewFileWithTextAndSaveTag(
-                                PreferencesHandler(requireActivity()),
-                                requireContext(),
-                                tag,
-                                text
-                            )
-                            tagEditText.setText("")
-                            linkEditText.setText("")
-                            amountEditText.setText("")
-                            Misc.hideKeyboard(requireActivity())
-                            Misc.toast(requireContext(), "Успешно добавлено")
-                        } catch (e: PyException) {
-                            Misc.toast(
-                                requireContext(),
-                                "Ссылка не сработала, попробуйте другую")
-                        }
-                    } else Misc.toast(
-                        requireContext(),
-                        "Введите количество постов для парсинга"
-                    )
+                    val amountText = amountEditText.text.toString()
+                    val amount = if (amountText.isEmpty()) 100 else amountText.toInt()
+
+                    try {
+                        var text = getParsedText(link, amount.toInt())
+                        text = FileHandler.cleanText(text)
+                        FileHandler.addNewFileWithTextAndSaveTag(
+                            PreferencesHandler(requireActivity()),
+                            requireContext(),
+                            tag,
+                            text
+                        )
+                        tagEditText.setText("")
+                        linkEditText.setText("")
+                        amountEditText.setText("")
+                        Misc.hideKeyboard(requireActivity())
+                        Misc.toast(requireContext(), "Успешно добавлено")
+                    } catch (e: PyException) {
+                        Misc.toast(
+                            requireContext(),
+                            "Ссылка не сработала, попробуйте другую"
+                        )
+                    }
                 } else Misc.toast(requireContext(), "Введите ссылку на сообщество")
             } else Misc.toast(requireContext(), "Введите название файла")
         }
@@ -85,5 +90,17 @@ class ParserFragment : Fragment() {
 
         val res = py.getModule("main").callAttr("get_posts", amount, domain)
         return res.toString()
+    }
+
+    private fun initDeleteButton(deleteButton: ImageButton) {
+        val buttonScaleAnimation: Animation =
+            AnimationUtils.loadAnimation(requireContext(), R.anim.button_scale)
+        deleteButton.setOnClickListener {
+            it.startAnimation(buttonScaleAnimation)
+            val myDialogFragment = DeleteByTagDialogFragment()
+            val manager = requireActivity().supportFragmentManager
+
+            myDialogFragment.show(manager, "DeleteByTagDialog")
+        }
     }
 }

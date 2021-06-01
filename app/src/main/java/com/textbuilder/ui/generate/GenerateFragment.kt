@@ -1,4 +1,4 @@
-package com.textbuilder.ui.ready
+package com.textbuilder.ui.generate
 
 import android.app.Activity
 import android.os.Bundle
@@ -13,13 +13,13 @@ import com.example.textbuilder.R
 import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.CardEntity
 import com.textbuilder.service.FileHandler
-import com.textbuilder.service.Logger
 import com.textbuilder.service.PreferencesHandler
 import com.textbuilder.ui.UpdateListener
+import com.textbuilder.ui.upload.dialog.DeleteByTagDialogFragment
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ReadyFragment : Fragment() {
+class GenerateFragment : Fragment() {
     private var spinner: Spinner? = null
     private var lengthEditText: EditText? = null
     private var depthEditText: EditText? = null
@@ -29,13 +29,13 @@ class ReadyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_ready, container, false)
-        initSpinner(rootView.findViewById(R.id.ready_fragment_spinner))
+        val rootView = inflater.inflate(R.layout.fragment_generate, container, false)
+        initSpinner(rootView.findViewById(R.id.generate_fragment_spinner))
         initTextEditors(
-            rootView.findViewById(R.id.ready_fragment_edittext_length),
-            rootView.findViewById(R.id.ready_fragment_edittext_depth)
+            rootView.findViewById(R.id.generate_fragment_edittext_length),
+            rootView.findViewById(R.id.generate_fragment_edittext_depth)
         )
-        initButtonGenerate(rootView.findViewById(R.id.ready_fragment_button_generate))
+        initButtonGenerate(rootView.findViewById(R.id.generate_fragment_button_generate))
 
         return rootView
     }
@@ -72,20 +72,16 @@ class ReadyFragment : Fragment() {
             val depthStr = depthEditText?.text.toString()
             val type = spinner?.selectedItemPosition
 
-            val length: Int
-            val depth: Int
+            val length: Int = if (lengthStr.isEmpty()) 10 else lengthStr.toInt()
+            val depth: Int = if (depthStr.isEmpty()) 1 else depthStr.toInt()
 
-            if (lengthStr.isNotEmpty() && depthStr.isNotEmpty()) {
-                length = lengthStr.toInt()
-                depth = depthStr.toInt()
+            if (length in 1..1000) {
+                if (depth in 1..3) { // input ok
+                    handleTextGeneration(type!!, length, depth)
+                    updateListener?.onUpdate()
+                } else makeToast("Укажите глубину алгоритма от 1 до 3")
+            } else makeToast("Укажите длину текста от 0 до 1000")
 
-                if (length > 0 && lengthStr.toInt() <= 1000) {
-                    if (depth > 0 && depthStr.toInt() <= 3) { // input ok
-                        handleTextGeneration(type!!, length, depth)
-                        updateListener?.onUpdate()
-                    } else makeToast("Укажите глубину алгоритма от 1 до 3")
-                } else makeToast("Укажите длину текста от 0 до 1000")
-            } else makeToast("Поля не заполнены")
         }
     }
 

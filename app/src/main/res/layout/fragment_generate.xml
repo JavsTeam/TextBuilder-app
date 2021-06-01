@@ -11,7 +11,7 @@
         android:padding="8dp">
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/ready_fragment_spinner"
+            android:id="@+id/generate_fragment_spinner"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="2dp"
@@ -30,31 +30,31 @@
         </androidx.appcompat.widget.AppCompatSpinner>
 
         <EditText
-            android:id="@+id/ready_fragment_edittext_length"
+            android:id="@+id/generate_fragment_edittext_length"
             style="@style/edittext_style_default"
             android:hint="Длина"
             android:paddingStart="@dimen/size_medium"
             android:theme="@style/edittext_theme_default"
-            app:layout_constraintEnd_toStartOf="@+id/ready_fragment_edittext_depth"
+            app:layout_constraintEnd_toStartOf="@+id/generate_fragment_edittext_depth"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ready_fragment_spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/generate_fragment_spinner" />
 
         <EditText
-            android:id="@+id/ready_fragment_edittext_depth"
+            android:id="@+id/generate_fragment_edittext_depth"
             style="@style/edittext_style_default"
             android:hint="Глубина"
             android:paddingStart="@dimen/size_medium"
             android:theme="@style/edittext_theme_default"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ready_fragment_edittext_length"
-            app:layout_constraintTop_toBottomOf="@+id/ready_fragment_spinner" />
+            app:layout_constraintStart_toEndOf="@id/generate_fragment_edittext_length"
+            app:layout_constraintTop_toBottomOf="@+id/generate_fragment_spinner" />
 
         <Button
-            android:id="@+id/ready_fragment_button_generate"
+            android:id="@+id/generate_fragment_button_generate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Сгенерировать!"
-            app:layout_constraintTop_toBottomOf="@+id/ready_fragment_edittext_length" />
+            app:layout_constraintTop_toBottomOf="@+id/generate_fragment_edittext_length" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Cleaner {
-    public static final String[] defaultArray = {" ", "\n", "http", "#", ":", "[", "]"};
+    public static final String[] defaultArray = {" ", "\n", "http", "#", "[", "]", "/"};
 
     public static void deleteFromFileIfContains(String[] forbidden, String pathToTxt) {
         StringBuilder text = new StringBuilder();

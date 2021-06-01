@@ -3,6 +3,7 @@ package com.textbuilder.service
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
+import com.textbuilder.gen.handlers.Cleaner
 import java.io.FileNotFoundException
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -30,6 +31,10 @@ class FileHandler {
             context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                 it.write(text.toByteArray())
             }
+        }
+
+        fun cleanText(text: String): String {
+            return Cleaner.deleteFromTextIfContains(Cleaner.defaultArray, text)
         }
 
         fun getTextFromFileByUri(txtUri: Uri, activity: Activity): String {

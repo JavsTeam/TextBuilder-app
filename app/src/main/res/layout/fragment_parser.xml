@@ -18,7 +18,6 @@
             android:autofillHints=""
             android:gravity="center"
             android:hint="Название исходного файла"
-            android:text="test"
             android:inputType="text"
             android:theme="@style/edittext_theme_default"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +31,6 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:gravity="center"
-            android:text="https://vk.com/jumoreski"
             android:hint="Полная ссылка на сообщество ВК"
             android:inputType="text"
             android:theme="@style/edittext_theme_default"
@@ -47,7 +45,6 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:gravity="center"
-            android:text="100"
             android:hint="Количество постов"
             android:inputType="number"
             android:theme="@style/edittext_theme_default"
@@ -57,11 +54,22 @@
 
         <Button
             android:id="@+id/parser_fragment_button_save"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Сохранить"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/parser_fragment_button_delete"
+            app:layout_constraintTop_toBottomOf="@id/parser_fragment_edittext_amount" />
+
+        <ImageButton
+            android:id="@+id/parser_fragment_button_delete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_delete_24"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/parser_fragment_edittext_amount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

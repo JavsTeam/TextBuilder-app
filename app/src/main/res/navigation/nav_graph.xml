@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/readyFragment">
+    app:startDestination="@id/generateFragment">
 
     <fragment
-        android:id="@+id/readyFragment"
-        android:name="com.textbuilder.ui.ready.ReadyFragment"
+        android:id="@+id/generateFragment"
+        android:name="com.textbuilder.ui.generate.GenerateFragment"
         android:label="interaction"
-        tools:layout="@layout/fragment_ready">
+        tools:layout="@layout/fragment_generate">
         <action
             android:id="@+id/action_interactionFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
@@ -25,7 +25,7 @@
         tools:layout="@layout/fragment_upload">
         <action
             android:id="@+id/action_uploadFragment_to_interactionFragment"
-            app:destination="@id/readyFragment" />
+            app:destination="@id/generateFragment" />
         <action
             android:id="@+id/action_uploadFragment_to_pasteFragment"
             app:destination="@id/parserFragment" />
@@ -33,12 +33,12 @@
 
     <fragment
         android:id="@+id/parserFragment"
-        android:name="com.textbuilder.ui.paste.ParserFragment"
+        android:name="com.textbuilder.ui.parser.ParserFragment"
         android:label="PasteFragment"
         tools:layout="@layout/fragment_parser">
         <action
             android:id="@+id/action_pasteFragment_to_readyFragment"
-            app:destination="@id/readyFragment" />
+            app:destination="@id/generateFragment" />
         <action
             android:id="@+id/action_pasteFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
