@@ -11,11 +11,8 @@ import com.example.textbuilder.R
 import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.FavoriteCardsDatabase
 import com.textbuilder.db.providers.CardHandler
-import com.textbuilder.service.Logger
 import com.textbuilder.ui.display.recyclerview.Adapter
 import com.textbuilder.ui.display.recyclerview.Card
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class DisplayFragment : Fragment() {
     var recyclerView: RecyclerView? = null

@@ -7,7 +7,7 @@
         <item name="android:clickable">true</item>
         <item name="android:layout_marginBottom">@dimen/size_default</item>
         <item name="android:layout_marginTop">@dimen/size_small</item>
-        <item name="android:layout_marginEnd">@dimen/size_small</item>
+        <item name="android:layout_marginEnd">8dp</item>
         <item name="android:paddingStart">1dp</item>
         <item name="android:paddingTop">3dp</item>
         <item name="android:layout_width">36dp</item>
@@ -45,5 +45,11 @@
 
     <style name="focusable_style">
         <item name="android:focusable">true</item>
+    </style>
+
+    <style name="unfold_layout_style">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+
     </style>
 </resources>

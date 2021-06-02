@@ -60,13 +60,13 @@ class CardHandler(private val database: CardsOperational) {
         }
     }
 
-    fun updateCardData(updatedCardId: Int) { // iwueyriweryiuwr!!!!
+    fun updateCardData(updatedCardId: Int) {
         updateCardData(database.cardsDao().findById(updatedCardId))
     }
 
     fun changeFavoriteStatus(cardId: Int) {
         val card = getCard(cardId)
-        if(card != null) { // card doesnt exist
+        if(card != null) { // If card doesnt exist
             card.isFavorite = !card.isFavorite
             updateCardData(card)
         }

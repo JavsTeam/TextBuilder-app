@@ -23,50 +23,38 @@ class MainActivity : AppCompatActivity(), UpdateListener {
     }
 
     private var displayFragment: DisplayFragment? = null
-    var sourceList: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        // Checking and restoring preferences storage if necessary
         val preferencesHandler = PreferencesHandler(this)
         preferencesHandler.logState()
-
         createDefaultSetOfSources()
 
+        // Setting up navigation host for Jetpack's Navigation component framework
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
+        // Setting up navigation view for Jetpack's Navigation component framework
         val bottomNavigationView: BottomNavigationView =
             findViewById(R.id.main_bottom_navigation_view)
         bottomNavigationView.setupWithNavController(navController)
 
-        var isDisplayingAll = true
-        displayFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_display) as DisplayFragment
-
+        // Setting up update listener of ActivityMain to let spinner know, when to rebuild itself
         val interactionFragment =
             navHostFragment.childFragmentManager.fragments[0] as GenerateFragment
         interactionFragment.setListener(this)
 
-        val buttonScaleAnimation: Animation =
-            AnimationUtils.loadAnimation(this, R.anim.button_scale)
-        val favoriteButton: ImageButton = findViewById(R.id.toolbar_button_favorite)
-        val hostFragmentLayout: View = findViewById(R.id.nav_host_fragment)
-        favoriteButton.setOnClickListener {
-            it.startAnimation(buttonScaleAnimation)
-            if (isDisplayingAll) {
-                displayFragment?.displayFavorite()
-                hostFragmentLayout.visibility = View.GONE
-            } else {
-                displayFragment?.displayAll()
-                hostFragmentLayout.visibility = View.VISIBLE
-            }
-            isDisplayingAll = !isDisplayingAll
-        }
-        displayFragment?.displayAll() // crutch for first launch
+        initLikeButton(findViewById(R.id.toolbar_button_favorite))
+
+        // Displaying all cards by default
+        displayFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_display) as DisplayFragment
+        displayFragment?.displayAll() // for first launch
     }
 
     private fun createDefaultSetOfSources() {
@@ -94,8 +82,26 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         }
     }
 
+    // Serve for handling display of general and favorite lists of cards
+    private fun initLikeButton(favoriteButton: ImageButton) {
+        var isDisplayingAll = true
+        val buttonScaleAnimation: Animation =
+            AnimationUtils.loadAnimation(this, R.anim.button_scale)
+        val hostFragmentLayout: View = findViewById(R.id.nav_host_fragment)
+        favoriteButton.setOnClickListener {
+            it.startAnimation(buttonScaleAnimation)
+            if (isDisplayingAll) {
+                displayFragment?.displayFavorite()
+                hostFragmentLayout.visibility = View.GONE
+            } else {
+                displayFragment?.displayAll()
+                hostFragmentLayout.visibility = View.VISIBLE
+            }
+            isDisplayingAll = !isDisplayingAll
+        }
+    }
+
     override fun onUpdate() {
-        Thread.sleep(20) // waiting for db
         displayFragment?.displayAll()
     }
 }

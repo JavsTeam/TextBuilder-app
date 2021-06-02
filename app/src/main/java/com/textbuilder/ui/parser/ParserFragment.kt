@@ -76,9 +76,7 @@ class ParserFragment : Fragment() {
     }
 
     private fun getParsedText(link: String, amount: Int): String {
-        // https://vk.com/public158343732
         val domain = link.substring(15)
-        Logger.d(domain)
 
         var py: Python? = null
         py = if (!Python.isStarted()) {

@@ -10,6 +10,6 @@
         android:title="Загрузить" />
     <item
         android:id="@+id/parserFragment"
-        android:icon="@drawable/ic_paste_24"
+        android:icon="@drawable/ic_link_24"
         android:title="Ссылка" />
 </menu>

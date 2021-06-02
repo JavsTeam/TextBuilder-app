@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:gravity="center"
-            android:hint="Название исходного файла"
+            android:hint="Выберите название исходного файла"
             android:inputType="text"
             android:theme="@style/edittext_theme_default"
             app:layout_constraintEnd_toEndOf="parent"

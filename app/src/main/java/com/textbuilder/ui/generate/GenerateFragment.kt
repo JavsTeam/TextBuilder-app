@@ -1,23 +1,23 @@
 package com.textbuilder.ui.generate
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import com.textbuilder.gen.TextBuilder
 import com.example.textbuilder.R
-import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.CardEntity
+import com.textbuilder.db.CardsDatabase
+import com.textbuilder.db.providers.CardHandler
+import com.textbuilder.gen.TextBuilder
 import com.textbuilder.service.FileHandler
+import com.textbuilder.service.Misc
 import com.textbuilder.service.PreferencesHandler
 import com.textbuilder.ui.UpdateListener
-import com.textbuilder.ui.upload.dialog.DeleteByTagDialogFragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class GenerateFragment : Fragment() {
     private var spinner: Spinner? = null
@@ -52,7 +52,6 @@ class GenerateFragment : Fragment() {
         spinner.adapter = adapter
     }
 
-
     private fun initTextEditors(lengthEditText: EditText, depthEditText: EditText) {
         this.lengthEditText = lengthEditText
         this.depthEditText = depthEditText
@@ -60,14 +59,9 @@ class GenerateFragment : Fragment() {
 
     private var updateListener: UpdateListener? = null
 
-    // to allow activity pass command to update cards in ReadySourceFragment
-    fun setListener(listener: UpdateListener) {
-        updateListener = listener
-    }
-
     private fun initButtonGenerate(generateButton: Button) {
         generateButton.setOnClickListener {
-            hideKeyboard()
+            Misc.hideKeyboard(requireActivity())
             val lengthStr = lengthEditText?.text.toString()
             val depthStr = depthEditText?.text.toString()
             val type = spinner?.selectedItemPosition
@@ -79,41 +73,22 @@ class GenerateFragment : Fragment() {
                 if (depth in 1..3) { // input ok
                     handleTextGeneration(type!!, length, depth)
                     updateListener?.onUpdate()
-                } else makeToast("Укажите глубину алгоритма от 1 до 3")
-            } else makeToast("Укажите длину текста от 0 до 1000")
+                } else Misc.toast(requireContext(), "Укажите глубину алгоритма от 1 до 3")
+            } else Misc.toast(requireContext(), "Укажите длину текста от 0 до 1000")
 
         }
     }
 
     private fun handleTextGeneration(sourceId: Int, length: Int, depth: Int) {
         val sourcesList = PreferencesHandler(requireActivity()).getSourceTagList()
-        val text = getText(sourceId, length, depth)
+        val text = getGeneratedText(sourceId, length, depth)
         saveToDB(sourcesList[sourceId], text)
     }
 
-    private fun hideKeyboard() {
-        val focusedView: View? = requireActivity().currentFocus
-        focusedView?.clearFocus()
-        val imm: InputMethodManager =
-            requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(focusedView?.windowToken, 0)
-    }
-
-    // TODO: No net database connection
-    private fun getText(sourceId: Int, length: Int, depth: Int): String {
-        return getGeneratedText(sourceId, length, depth)
-    }
-
     private fun saveToDB(tag: String, text: String) {
-        val db = CardsDatabase(requireContext())
-        GlobalScope.launch {
-            db.cardsDao().insert(CardEntity(0, tag, text, false))
-            db.cardsDao().deleteOverLimit()
-        }
-    }
-
-    private fun makeToast(text: String) {
-        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+        val handler = CardHandler(CardsDatabase(requireContext()))
+        handler.addCard(CardEntity(0, tag, text, false))
+        handler.deleteOverLimit()
     }
 
     private fun getGeneratedText(sourceId: Int, length: Int, depth: Int): String {
@@ -128,9 +103,11 @@ class GenerateFragment : Fragment() {
             requireContext(),
             sourceText
         )
-
-
-
         return textBuilder.getText(length)
+    }
+
+    // To allow activity pass commands to update cards
+    fun setListener(listener: UpdateListener) {
+        updateListener = listener
     }
 }
