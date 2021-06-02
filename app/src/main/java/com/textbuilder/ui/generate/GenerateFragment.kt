@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import com.example.textbuilder.R
+import com.textbuilder.R
 import com.textbuilder.db.CardEntity
 import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.providers.CardHandler

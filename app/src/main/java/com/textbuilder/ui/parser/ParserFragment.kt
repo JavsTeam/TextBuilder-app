@@ -13,9 +13,8 @@ import androidx.fragment.app.Fragment
 import com.chaquo.python.PyException
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
-import com.example.textbuilder.R
+import com.textbuilder.R
 import com.textbuilder.service.FileHandler
-import com.textbuilder.service.Logger
 import com.textbuilder.service.Misc
 import com.textbuilder.service.PreferencesHandler
 import com.textbuilder.ui.upload.dialog.DeleteByTagDialogFragment

@@ -14,15 +14,17 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.textbuilder.R
+import com.textbuilder.R
 import com.textbuilder.service.FileHandler
 import com.textbuilder.service.FileHandler.Companion.isFileTagUnique
-import com.textbuilder.service.Misc
 import com.textbuilder.service.PreferencesHandler
 import com.textbuilder.ui.upload.dialog.DeleteByTagDialogFragment
 
-
 class UploadFragment : Fragment() {
+    companion object {
+        private const val REQUEST_TEXT_GET = 1
+    }
+
     private var fileTagEditText: EditText? = null
     private var preferencesHandler: PreferencesHandler? = null
 
@@ -55,8 +57,6 @@ class UploadFragment : Fragment() {
     private fun initFileTagEditText(fileNameEditText: EditText) {
         this.fileTagEditText = fileNameEditText
     }
-
-    private val REQUEST_TEXT_GET = 1
 
     private fun initUploadButton(uploadButton: Button) {
         uploadButton.setOnClickListener {

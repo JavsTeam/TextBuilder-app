@@ -13,7 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.textbuilder.R
+import com.textbuilder.R
 import com.textbuilder.db.CardEntity
 import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.FavoriteCardsDatabase

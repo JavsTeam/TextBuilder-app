@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.textbuilder.R
+import com.textbuilder.R
 import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.FavoriteCardsDatabase
 import com.textbuilder.db.providers.CardHandler

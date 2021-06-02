@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.textbuilder.R
+import com.textbuilder.R
 import com.textbuilder.gen.handlers.Reader
 import com.textbuilder.service.FileHandler
 import com.textbuilder.service.PreferencesHandler
