@@ -16,6 +16,7 @@ import com.textbuilder.service.PreferencesHandler
 import com.textbuilder.ui.display.DisplayFragment
 import com.textbuilder.ui.generate.GenerateFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.textbuilder.gen.handlers.Cleaner
 
 class MainActivity : AppCompatActivity(), UpdateListener {
     companion object {
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity(), UpdateListener {
         createDefaultSource("Бугурты", preferencesHandler, R.raw.bugurts)
         createDefaultSource("Юморески", preferencesHandler, R.raw.jumoreski)
         createDefaultSource("Новости", preferencesHandler, R.raw.news)
+        createDefaultSource("Книга о Гарри Поттере", preferencesHandler, R.raw.harry3)
     }
 
     private fun createDefaultSource(
