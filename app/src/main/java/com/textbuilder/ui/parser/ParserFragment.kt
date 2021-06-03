@@ -49,26 +49,28 @@ class ParserFragment : Fragment() {
                     val amountText = amountEditText.text.toString()
                     val amount = if (amountText.isEmpty()) 100 else amountText.toInt()
 
-                    try {
-                        var text = getParsedText(link, amount.toInt())
-                        text = FileHandler.cleanText(text)
-                        FileHandler.addNewFileWithTextAndSaveTag(
-                            PreferencesHandler(requireActivity()),
-                            requireContext(),
-                            tag,
-                            text
-                        )
-                        tagEditText.setText("")
-                        linkEditText.setText("")
-                        amountEditText.setText("")
-                        Misc.hideKeyboard(requireActivity())
-                        Misc.toast(requireContext(), "Успешно добавлено")
-                    } catch (e: PyException) {
-                        Misc.toast(
-                            requireContext(),
-                            "Ссылка не сработала, попробуйте другую"
-                        )
-                    }
+                    if(amount <= 1000) {
+                        try {
+                            var text = getParsedText(link, amount)
+                            text = FileHandler.cleanText(text)
+                            FileHandler.addNewFileWithTextAndSaveTag(
+                                PreferencesHandler(requireActivity()),
+                                requireContext(),
+                                tag,
+                                text
+                            )
+                            tagEditText.setText("")
+                            linkEditText.setText("")
+                            amountEditText.setText("")
+                            Misc.hideKeyboard(requireActivity())
+                            Misc.toast(requireContext(), "Успешно добавлено")
+                        } catch (e: PyException) {
+                            Misc.toast(
+                                requireContext(),
+                                "Ссылка не сработала, попробуйте другую"
+                            )
+                        }
+                    } else Misc.toast(requireContext(), "Количество поство должно бять меньше 1000")
                 } else Misc.toast(requireContext(), "Введите ссылку на сообщество")
             } else Misc.toast(requireContext(), "Введите название файла")
         }
