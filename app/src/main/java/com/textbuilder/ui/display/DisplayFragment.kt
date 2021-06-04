@@ -11,6 +11,7 @@ import com.textbuilder.R
 import com.textbuilder.db.CardsDatabase
 import com.textbuilder.db.FavoriteCardsDatabase
 import com.textbuilder.db.providers.CardHandler
+import com.textbuilder.service.Logger
 import com.textbuilder.ui.display.recyclerview.Adapter
 import com.textbuilder.ui.display.recyclerview.Card
 
@@ -44,7 +45,6 @@ class DisplayFragment : Fragment() {
     }
 
     private fun setRecyclerViewAdapter(cardData: ArrayList<Card>) {
-        Thread.sleep(20) // crutch to wait for DB access
         recyclerView?.adapter = Adapter(cardData, requireContext())
     }
 

@@ -75,7 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/unfold_layout_style"
-            android:layout_marginTop="8dp"
             android:background="@drawable/rectangle_upperline_arrow_up"
             android:clickable="true"
             android:focusable="true"

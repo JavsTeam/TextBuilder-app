@@ -43,13 +43,15 @@ class ParserFragment : Fragment() {
             val tag = tagEditText.text.toString()
             val link = linkEditText.text.toString()
 
-
             if (tag.isNotEmpty()) {
                 if (link.isNotEmpty()) {
                     val amountText = amountEditText.text.toString()
                     val amount = if (amountText.isEmpty()) 100 else amountText.toInt()
-
-                    if(amount <= 1000) {
+                    if (amount <= 1000) {
+                        tagEditText.setText("")
+                        linkEditText.setText("")
+                        amountEditText.setText("")
+                        Misc.hideKeyboard(requireActivity())
                         try {
                             var text = getParsedText(link, amount)
                             text = FileHandler.cleanText(text)
@@ -59,10 +61,6 @@ class ParserFragment : Fragment() {
                                 tag,
                                 text
                             )
-                            tagEditText.setText("")
-                            linkEditText.setText("")
-                            amountEditText.setText("")
-                            Misc.hideKeyboard(requireActivity())
                             Misc.toast(requireContext(), "Успешно добавлено")
                         } catch (e: PyException) {
                             Misc.toast(

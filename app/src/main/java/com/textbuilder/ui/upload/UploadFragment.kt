@@ -60,13 +60,18 @@ class UploadFragment : Fragment() {
 
     private fun initUploadButton(uploadButton: Button) {
         uploadButton.setOnClickListener {
-            preferencesHandler = PreferencesHandler(requireActivity())
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                type = "*/*"
-            }
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("text/plain", "application/zip"))
-            if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivityForResult(intent, REQUEST_TEXT_GET)
+            if (!fileTagEditText?.text.toString().isEmpty()) {
+                preferencesHandler = PreferencesHandler(requireActivity())
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    type = "*/*"
+                }
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("text/plain", "application/zip"))
+                if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                    startActivityForResult(intent, REQUEST_TEXT_GET)
+                }
+            } else {
+                Toast.makeText(context, "Введите другое название для исходника", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -77,7 +82,7 @@ class UploadFragment : Fragment() {
             val documentUri: Uri? = data?.data
             val fileTag = getFileTag()
 
-            if (documentUri != null && fileTag.isNotEmpty()) {
+            if (documentUri != null) {
                 fileTagEditText?.setText("")
                 val fileName = FileHandler.encodeFileTag(fileTag)
                 val text = FileHandler.getTextFromFileByUri(documentUri, requireActivity())
@@ -85,9 +90,6 @@ class UploadFragment : Fragment() {
                 preferencesHandler?.saveFileTag(fileTag, fileName)
                 FileHandler.saveTextToFile(context, fileName, text)
                 Toast.makeText(context, "Исходный файл добавлен", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(context, "Введите другое название для исходника", Toast.LENGTH_SHORT)
                     .show()
             }
         }

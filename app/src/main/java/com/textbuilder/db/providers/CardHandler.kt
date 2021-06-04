@@ -5,6 +5,7 @@ import com.textbuilder.db.CardsOperational
 import com.textbuilder.ui.display.recyclerview.Card
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.logging.Logger
 
 class CardHandler(private val database: CardsOperational) {
     fun addCard(card: CardEntity) {
